@@ -1,4 +1,3 @@
-const { required } = require('joi')
 const mongoose = require('mongoose')
 
 const carSchema = new mongoose.Schema({
@@ -27,6 +26,8 @@ const carSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
+}, {
+    timestamps: false
 })
 
 const car = mongoose.model('car', carSchema)
