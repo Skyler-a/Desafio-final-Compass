@@ -18,8 +18,9 @@ class carService {
         return result
     }
     async updateCar(id, body) {
-        const result = await carRepository.updateCar(id, body)
-        return result
+        const result = await carRepository.updateCar(id, body);
+        const res = await { message: 'Car updated successfully' }
+        return result, res
     }
 }
 module.exports = new carService();
