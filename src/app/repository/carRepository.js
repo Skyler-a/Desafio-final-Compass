@@ -7,5 +7,8 @@ class carRepository {
     async findCar(payload) {
         return carSchema.find(payload);
     }
+    async findCarById(payload) {
+        return carSchema.findById(payload);
+    }
 }
 module.exports = new carRepository();

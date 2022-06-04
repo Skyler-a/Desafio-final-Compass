@@ -9,5 +9,9 @@ class carService {
         const result = await carRepository.findCar(payload)
         return result
     }
+    async findCarById(payload) {
+        const result = await carRepository.findCarById(payload)
+        return result
+    }
 }
 module.exports = new carService();
