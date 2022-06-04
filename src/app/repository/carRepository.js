@@ -13,5 +13,8 @@ class carRepository {
     async deleteCar(payload) {
         return carSchema.findByIdAndDelete(payload);
     }
+    async updateCar(id, body) {
+        return carSchema.findByIdAndUpdate(id, body);
+    }
 }
 module.exports = new carRepository();
