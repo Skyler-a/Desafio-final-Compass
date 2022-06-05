@@ -1,5 +1,5 @@
 const personService = require('../service/personService');
-
+const idNonStandard = require('../utils/idNonStandard');
 class personController {
     async createPerson(req, res) {
         try {
@@ -15,7 +15,7 @@ class personController {
             const result = await personService.findPerson(payload);
             return res.status(200).json(result)
         } catch (error) {
-            return res.status(500).json(error)
+            return res.status(400).json(error)
         }
     }
     async findPersonById(req, res) {
@@ -23,15 +23,21 @@ class personController {
             const result = await personService.findPersonById(req.params.id);
             return res.status(200).json(result)
         } catch (error) {
-            return res.status(500).json(error)
+            if (error.name === "CastError") {
+                return res.json(new idNonStandard())
+            }
+            return res.status(400).json(error)
         }
     }
     async deletePerson(req, res) {
         try {
             const result = await personService.deletePerson(req.params.id);
-            return res.status(200).json(result)
-        } catch {
-            return res.status(500).json(error)
+            return res.status(204).json(result)
+        } catch (error) {
+            if (error.name === "CastError") {
+                return res.json(new idNonStandard())
+            }
+            return res.status(400).json(error)
         }
     }
     async updatePerson(req, res) {
@@ -39,7 +45,10 @@ class personController {
             const result = await personService.updatePerson(req.params.id, req.body);
             return res.status(200).json(result)
         } catch (error) {
-            return res.status(500).json(error)
+            if (error.name === "CastError") {
+                return res.json(new idNonStandard())
+            }
+            return res.status(400).json(error)
         }
     }
 }
