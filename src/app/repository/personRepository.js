@@ -1,6 +1,6 @@
 const personSchema = require('../schema/personSchema');
 
-class carRepository {
+class personRepository {
     async createPerson(payload) {
         return personSchema.create(payload);
     }
@@ -17,4 +17,4 @@ class carRepository {
         return personSchema.findByIdAndUpdate(id, body);
     }
 }
-module.exports = new carRepository();
+module.exports = new personRepository();
