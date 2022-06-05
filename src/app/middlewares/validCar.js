@@ -11,8 +11,8 @@ const carPost = joi.object({
     color: joi.string().required(),
     accessories: joi.array().min(1).unique().items(joi.object({
         description: joi.string().required()
-    })).error(new descriptionInvalid('accessories')),
-    passengersQtd: joi.number().min(3).required().error(new passengerInvalid('passengersQtd'))
+    })).error(new descriptionInvalid()),
+    passengersQtd: joi.number().min(3).required().error(new passengerInvalid())
 })
 
 
@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
             next();
         }
     } catch (error) {
-
+        error: error.message
     }
 }
 

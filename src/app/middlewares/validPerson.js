@@ -1,14 +1,16 @@
 const joi = require("joi");
 const moment = require("moment");
 const validateCpf = require("../utils/validateCpf");
+const invalidField = require("../utils/invalidField");
+const invalidEnum = require("../utils/invalidEnum");
 
 const personPost = joi.object({
-    name: joi.string().min(4).required(),
-    cpf: joi.string().required(),
-    birthDay: joi.date().required(),
-    email: joi.string().email().required(),
-    password: joi.string().min(6).required(),
-    canDrive: joi.string().valid("yes", "no")
+    name: joi.string().min(4).required().error(new invalidField("name")),
+    cpf: joi.string().required().error(new invalidField("cpf")),
+    birthDay: joi.date().required().error(new invalidField("birthDay")),
+    email: joi.string().email().required().error(new invalidField("email")),
+    password: joi.string().min(6).required().error(new invalidField("password")),
+    canDrive: joi.string().valid("yes", "no").error(new invalidEnum("canDrive"))
 })
 
 module.exports = async (req, res, next) => {
