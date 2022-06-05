@@ -19,8 +19,11 @@ const carSchema = new mongoose.Schema({
         required: true
     },
     accessories: [{
-        type: String,
-        required: true
+        description: {
+            type: String,
+            required: true,
+            unique: true
+        }
     }],
     passengersQtd: {
         type: Number,
