@@ -16,12 +16,28 @@ const carPost = joi.object({
     passengersQtd: joi.number().min(3).required().error(new passengerInvalid())
 })
 
+const carPut = joi.object({
+    model: joi.string(),
+    type: joi.string(),
+    brand: joi.string(),
+    year: joi.number().min(1950).max(2022).error(new carYearInvalid()),
+    color: joi.string(),
+    accessories: joi.array().min(1).unique().items(joi.object({
+        description: joi.string()
+    })).error(new descriptionInvalid()),
+    passengersQtd: joi.number().min(3).error(new passengerInvalid())
+})
+
 
 module.exports = async (req, res, next) => {
     const reqBody = req.body;
     try {
         if (req.method == "POST") {
             await carPost.validateAsync({ ...reqBody });
+            next();
+        }
+        if (req.method == "PUT") {
+            await carPut.validateAsync({ ...reqBody });
             next();
         }
     } catch (error) {

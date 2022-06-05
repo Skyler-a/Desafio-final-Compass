@@ -6,7 +6,7 @@ class descriptionInvalid extends Error {
 		this.message = [
 			{
 				message: this.name,
-				details: [{ message: `accessories must be at least one element` }]
+				details: [{ message: `Your acessories field is invalid` }]
 			}];
 	}
 }
