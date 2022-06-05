@@ -1,7 +1,7 @@
 class passengerInvalid extends Error {
     constructor() {
         super();
-        this.name = "Desciption Invalid";
+        this.name = "Passengers Invalid";
         this.status = 400;
         this.message = [
             {

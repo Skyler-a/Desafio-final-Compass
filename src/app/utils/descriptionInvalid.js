@@ -1,7 +1,7 @@
 class descriptionInvalid extends Error {
 	constructor() {
 		super();
-		this.name = "Desciption Invalid";
+		this.name = "Accessories Invalid";
 		this.status = 400;
 		this.message = [
 			{
