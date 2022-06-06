@@ -10,4 +10,4 @@ function formataCpf(person) {
         const personFormatado = person.cpf = cpf;
         return personFormatado;
     }
-}
+} module.exports = formataCpf;

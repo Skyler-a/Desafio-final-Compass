@@ -1,7 +1,6 @@
 const carRepository = require('../repository/carRepository');
 const notFound = require('../utils/notFound');
 
-
 class carService {
     async createCar(payload) {
         const result = await carRepository.createCar(payload)
