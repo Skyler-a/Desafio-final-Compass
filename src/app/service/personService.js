@@ -1,10 +1,11 @@
 const personRepository = require('../repository/personRepository');
 const notFound = require('../utils/notFound');
 const formataCpf = require('../utils/cpfFomate');
+const moment = require('moment');
 class personService {
     async createPerson(payload) {
+        payload.birthDay = moment(payload.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD')
         const result = await personRepository.createPerson(payload)
-        formataCpf(result);
         return result
     }
     async findPerson(payload) {
@@ -29,6 +30,7 @@ class personService {
         return result
     }
     async updatePerson(id, body) {
+        body.birthDay = moment(body.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD')
         const result = await personRepository.updatePerson(id, body);
         if (result == null) {
             throw new notFound("id");

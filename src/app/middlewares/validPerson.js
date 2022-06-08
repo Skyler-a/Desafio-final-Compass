@@ -17,45 +17,39 @@ const personPut = joi.object({
     name: joi.string().min(4).error(new invalidField("name")),
     cpf: joi.string().error(new invalidField("cpf")),
     birthDay: joi.date().error(new invalidField("birthDay")),
-    email: joi.string().error(new invalidField("email")),
+    email: joi.string().email().error(new invalidField("email")),
     password: joi.string().min(6).error(new invalidField("password")),
     canDrive: joi.string().valid("yes", "no").error(new invalidEnum("canDrive"))
 })
+
 
 module.exports = async (req, res, next) => {
     try {
         const reqBody = req.body;
         const birthDay = moment(reqBody.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD')
-        const birthDayIsValid = moment().diff(birthDay, 'years', false) >= 18
-        email = reqBody.email;
-        const emailIsValid = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.test(email)
+        const birthDayIsInvalid = moment().diff(birthDay, 'years', false) < 18
 
-        if (birthDayIsValid == false) {
+        if (birthDayIsInvalid) {
             return res.status(400).json({
                 message: "Your age must be at least 18 years old"
             })
         }
+
         if (!validateCpf(reqBody.cpf)) {
             return res.status(400).json({
                 message: "Your cpf is invalid"
             })
         }
-        if (!emailIsValid) {
-            return res.status(400).json({
-                message: "Your email is invalid"
-            })
-        }
+
         if (req.method == "POST") {
-            await personPost.validateAsync({ ...reqBody, birthDay, email });
+            await personPost.validateAsync({ ...reqBody, birthDay });
             next();
         }
         if (req.method == "PUT") {
-            await personPut.validateAsync({ ...reqBody });
+            await personPut.validateAsync({ ...reqBody, birthDay });
             next();
         }
     } catch (error) {
-        return res.status(400).json({
-            error: error.message
-        })
+        return res.status(400).json(error.message)
     }
 }

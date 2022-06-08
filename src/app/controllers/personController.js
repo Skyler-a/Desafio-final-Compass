@@ -6,7 +6,7 @@ class personController {
             const result = await personService.createPerson(req.body);
             return res.status(201).json(result);
         } catch (error) {
-            return res.status(400).json(error)
+            return res.status(400).json(error.message)
         }
     }
     async findPerson(req, res) {
@@ -48,7 +48,7 @@ class personController {
             if (error.name === "CastError") {
                 return res.json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            return res.status(400).json(error.message)
         }
     }
 }
