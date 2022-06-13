@@ -23,7 +23,6 @@ const carSchema = new mongoose.Schema({
             type: String,
             required: true,
         },
-        _id: false,
     }],
     passengersQtd: {
         type: Number,
