@@ -1,8 +1,6 @@
-# Desafio-final-Compass
-
 <h1 align="center">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original-wordmark.svg" width="200" height="190" />
-  <p align="center">Desafio Sprint 4 | Compass</p>
+  <p align="center">Desafio Final</p>
 </h1>
 
 <p>
