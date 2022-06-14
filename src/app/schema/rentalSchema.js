@@ -43,7 +43,8 @@ const rentalSchema = new mongoose.Schema({
         },
         state: {
             type: String
-        }
+        },
+        _ID: false
     }],
 
 }, {
