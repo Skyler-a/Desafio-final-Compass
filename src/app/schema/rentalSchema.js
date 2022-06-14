@@ -24,9 +24,11 @@ const rentalSchema = new mongoose.Schema({
             required: true
         },
         isFilial: {
+            type: String,
+            required: true,
             enum: {
                 values: ["true", "false"],
-                required: true
+                message: "isFilial must be true or false"
             }
         },
         street: {
