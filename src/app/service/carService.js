@@ -32,5 +32,10 @@ class carService {
         const res = await { message: 'Car updated successfully' }
         return result, res
     }
+    async findAccessoriesById(payload) {
+        console.log(payload)
+        const result = await carRepository.findAccessoriesById(payload)
+        return result
+    }
 }
 module.exports = new carService();

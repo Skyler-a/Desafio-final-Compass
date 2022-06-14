@@ -16,5 +16,8 @@ class carRepository {
     async updateCar(id, body) {
         return carSchema.findByIdAndUpdate(id, body);
     }
+    async findAccessoriesById(payload) {
+        return carSchema.findById(payload);
+    }
 }
 module.exports = new carRepository();
