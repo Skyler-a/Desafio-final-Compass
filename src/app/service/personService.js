@@ -8,9 +8,8 @@ class personService {
         const result = await personRepository.createPerson(payload)
         return result
     }
-    async findPerson(payload) {
-        const result = await personRepository.findPerson(payload)
-        formataCpf(result);
+    async findPerson(payload, options) {
+        const result = await personRepository.findPerson(payload, options)
         return result
     }
     async findPersonById(payload) {

@@ -6,8 +6,8 @@ class carService {
         const result = await carRepository.createCar(payload)
         return result
     }
-    async findCar(payload) {
-        const result = await carRepository.findCar(payload)
+    async findCar(payload, options) {
+        const result = await carRepository.findCar(payload, options)
         return result
     }
     async findCarById(payload) {

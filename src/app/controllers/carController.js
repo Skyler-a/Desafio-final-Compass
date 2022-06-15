@@ -12,7 +12,12 @@ class carController {
     async findCar(req, res) {
         const payload = req.query;
         try {
-            const result = await carService.findCar(payload);
+            const { page, limit } = req.query
+            const options = {
+                page: parseInt(page),
+                limit: parseInt(limit)
+            }
+            const result = await carService.findCar(payload, options);
             return res.status(200).json(result)
         } catch (error) {
             return res.status(500).json(error)
