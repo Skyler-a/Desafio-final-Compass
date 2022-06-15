@@ -7,8 +7,8 @@ class rentalService {
         const result = await rentalRepository.createRental(informations)
         return result
     }
-    async findRental(payload) {
-        const result = await rentalRepository.findRental(payload)
+    async findRental(options, payload) {
+        const result = await rentalRepository.findRental(options, payload)
         return result
     }
     async findRentalById(id) {

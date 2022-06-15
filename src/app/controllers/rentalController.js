@@ -11,7 +11,12 @@ class rentalController {
     }
     async findRental(req, res) {
         try {
-            const result = await rentalService.findRental(req.query);
+            const { page, limit } = req.query
+            const options = {
+                page: parseInt(page),
+                limit: parseInt(limit)
+            }
+            const result = await rentalService.findRental(req.query, options);
             return res.status(200).json(result);
         } catch (error) {
             return res.status(400).json(error)
