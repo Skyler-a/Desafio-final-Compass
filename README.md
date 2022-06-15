@@ -17,7 +17,9 @@
 
 [API-Carros](#Api-Carros)
 
-[API-Pessoas](#Api-Pessoas)
+[API-Pessoas](#Api-Pessoa)
+
+[API-Locadoras](#Api-Locadoras)
 
 
 
@@ -68,6 +70,7 @@ npm start
 - [Moment](https://momentjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
+- [Axios](https://axios-http.com/docs/intro)
 
 ## API-Carros
 
@@ -185,5 +188,68 @@ npm start
 ```bash
   {
   "name": "Roberto"
+  }
+```
+
+## Api-Locadoras
+
+###Localizar uma locadora
+
+``/api/v1/rental`` <br>
+``/api/v1/rental?query=value``<br>
+``/api/v1/rental/:id``
+
+```bash
+[{
+    "name": "Gran Car Locadoras",
+      "cnpj": "62639504000103",
+      "activities": "Locadora 1",
+      "address": [
+        {
+          "cep": "96200-500",
+          "number": "1234",
+          "isFilial": "true",
+          "street": "Rua tal",
+          "neighborhood": "Bairro tal",
+          "city": "Belém",
+          "state": "PA",
+          "_id": "62a92f23d55783af0f37ce6f"
+        }
+      ]
+}]
+```
+
+### Cadastrar uma locadora
+
+``/api/v1/rental``
+
+```bash
+[{
+    "name": "Gran Car Locadoras",
+      "cnpj": "62639504000103",
+      "activities": "Locadora 1",
+      "address": {
+          "cep": "96200-500",
+          "number": "1234",
+          "isFilial": "true"
+      }
+}]
+```
+
+- Todos os campos são required, exceto o campo complemento
+- Não é possível haver CNPJs duplicados
+
+
+### Deletar uma locadora
+
+``/api/v1/rental/:id``
+
+### Atualizar uma locadora
+
+``/api/v1/rental/:id``
+
+```bash
+  {
+  "name": "Locadoras Almir"
   }
 ```
