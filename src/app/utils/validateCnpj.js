@@ -18,17 +18,17 @@ function validateCNPJ(cnpj) {
         cnpj == "99999999999999")
         return false;
 
-    lengh = cnpj.length - 2
-    numbers = cnpj.substring(0, lengh);
-    digits = cnpj.substring(lengh);
-    sum = 0;
-    pos = lengh - 7;
+    let lengh = cnpj.length - 2
+    let numbers = cnpj.substring(0, lengh);
+    let digits = cnpj.substring(lengh);
+    let sum = 0;
+    let pos = lengh - 7;
     for (i = lengh; i >= 1; i--) {
         sum += numbers.charAt(lengh - i) * pos--;
         if (pos < 2)
             pos = 9;
     }
-    result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+    let result = sum % 11 < 2 ? 0 : 11 - sum % 11;
     if (result != digits.charAt(0))
         return false;
 
