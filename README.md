@@ -203,7 +203,7 @@ npm start
 [{
     "name": "Gran Car Locadoras",
       "cnpj": "62639504000103",
-      "activities": "Locadora 1",
+      "activities": "Aluguel de Carros E Gestão de Frotas",
       "address": [
         {
           "cep": "96200-500",
@@ -227,7 +227,7 @@ npm start
 [{
     "name": "Gran Car Locadoras",
       "cnpj": "62639504000103",
-      "activities": "Locadora 1",
+      "activities": "Aluguel de Carros E Gestão de Frotas",
       "address": {
           "cep": "96200-500",
           "number": "1234",
