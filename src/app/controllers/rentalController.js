@@ -1,4 +1,5 @@
 const rentalService = require('../service/rentalService');
+const idNonStandard = require('../utils/idNonStandard');
 
 class rentalController {
     async createRental(req, res) {
@@ -27,6 +28,9 @@ class rentalController {
             const result = await rentalService.findRentalById(req.params.id);
             return res.status(200).json(result);
         } catch (error) {
+            if (error.kind === "ObjectId") {
+                return res.json(new idNonStandard())
+            }
             return res.status(400).json(error)
         }
     }
@@ -35,6 +39,9 @@ class rentalController {
             const result = await rentalService.updateRental(req.params.id, req.body);
             return res.status(200).json(result);
         } catch (error) {
+            if (error.kind === "ObjectId") {
+                return res.json(new idNonStandard())
+            }
             return res.status(400).json(error)
         }
     }
@@ -43,6 +50,9 @@ class rentalController {
             const result = await rentalService.deleteRental(req.params.id);
             return res.status(204).json(result);
         } catch (error) {
+            if (error.kind === "ObjectId") {
+                return res.json(new idNonStandard())
+            }
             return res.status(400).json(error)
         }
     }

@@ -1,5 +1,6 @@
 const rentalRepository = require('../repository/rentalRepository');
 const getCep = require('../utils/callCepApi');
+const notFound = require('../utils/notFound');
 
 class rentalService {
     async createRental(payload) {
@@ -13,14 +14,23 @@ class rentalService {
     }
     async findRentalById(id) {
         const result = await rentalRepository.findRentalById(id)
+        if (result == null) {
+            throw new notFound("id");
+        }
         return result
     }
     async updateRental(id, payload) {
         const result = await rentalRepository.updateRental(id, payload)
+        if (result == null) {
+            throw new notFound("id");
+        }
         return result
     }
     async deleteRental(id) {
         const result = await rentalRepository.deleteRental(id)
+        if (result == null) {
+            throw new notFound("id");
+        }
         return result
     }
 }

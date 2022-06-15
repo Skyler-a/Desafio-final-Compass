@@ -28,7 +28,7 @@ class personController {
             const result = await personService.findPersonById(req.params.id);
             return res.status(200).json(result)
         } catch (error) {
-            if (error.name === "CastError") {
+            if (error.kind === "ObjectId") {
                 return res.json(new idNonStandard())
             }
             return res.status(400).json(error)
@@ -39,7 +39,7 @@ class personController {
             const result = await personService.deletePerson(req.params.id);
             return res.status(204).json(result)
         } catch (error) {
-            if (error.name === "CastError") {
+            if (error.kind === "ObjectId") {
                 return res.json(new idNonStandard())
             }
             return res.status(400).json(error)
@@ -50,10 +50,10 @@ class personController {
             const result = await personService.updatePerson(req.params.id, req.body);
             return res.status(200).json(result)
         } catch (error) {
-            if (error.name === "CastError") {
+            if (error.kind === "ObjectId") {
                 return res.json(new idNonStandard())
             }
-            return res.status(400).json(error.message)
+            return res.status(400).json(error)
         }
     }
 }

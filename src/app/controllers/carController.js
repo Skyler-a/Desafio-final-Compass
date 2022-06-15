@@ -28,7 +28,7 @@ class carController {
             const result = await carService.findCarById(req.params.id);
             return res.status(200).json(result)
         } catch (error) {
-            if (error.name === "CastError") {
+            if (error.kind === "ObjectId") {
                 return res.json(new idNonStandard())
             }
             return res.status(400).json(error)
@@ -39,7 +39,7 @@ class carController {
             const result = await carService.deleteCar(req.params.id);
             return res.status(204).json(result)
         } catch (error) {
-            if (error.name === "CastError") {
+            if (error.kind === "ObjectId") {
                 return res.json(new idNonStandard())
             }
             return res.status(400).json(error)
@@ -50,7 +50,7 @@ class carController {
             const result = await carService.updateCar(req.params.id, req.body);
             return res.status(200).json(result)
         } catch (error) {
-            if (error.name === "CastError") {
+            if (error.kind === "ObjectId") {
                 return res.json(new idNonStandard())
             }
             return res.status(400).json(error)
