@@ -7,7 +7,7 @@ const invalidEnum = require("../utils/invalidEnum");
 const personPost = joi.object({
     name: joi.string().min(4).required().error(new invalidField("name")),
     cpf: joi.string().required().error(new invalidField("cpf")),
-    birthDay: joi.date().required().error(new invalidField("birthDay")),
+    birthDay: joi.string().required().error(new invalidField("birthDay")),
     email: joi.string().email().required().error(new invalidField("email")),
     password: joi.string().min(6).required().error(new invalidField("password")),
     canDrive: joi.string().valid("yes", "no").required().error(new invalidEnum("canDrive"))
@@ -16,7 +16,7 @@ const personPost = joi.object({
 const personPut = joi.object({
     name: joi.string().min(4).error(new invalidField("name")),
     cpf: joi.string().error(new invalidField("cpf")),
-    birthDay: joi.date().error(new invalidField("birthDay")),
+    birthDay: joi.string().error(new invalidField("birthDay")),
     email: joi.string().email().error(new invalidField("email")),
     password: joi.string().min(6).error(new invalidField("password")),
     canDrive: joi.string().valid("yes", "no").error(new invalidEnum("canDrive"))

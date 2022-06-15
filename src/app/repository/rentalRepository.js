@@ -10,8 +10,8 @@ class rentalRepository {
     async findRentalById(id) {
         return rentalSchema.findById(id);
     }
-    async updateRental(id, payload) {
-        return rentalSchema.findByIdAndUpdate(id, payload);
+    async updateRental(id, body) {
+        return rentalSchema.findByIdAndUpdate(id, body);
     }
     async deleteRental(id) {
         return rentalSchema.findByIdAndDelete(id);

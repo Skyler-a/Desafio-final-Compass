@@ -19,8 +19,8 @@ class rentalService {
         }
         return result
     }
-    async updateRental(id, payload) {
-        const result = await rentalRepository.updateRental(id, payload)
+    async updateRental(id, body) {
+        const result = await rentalRepository.updateRental(id, body)
         if (result == null) {
             throw new notFound("id");
         }
