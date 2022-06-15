@@ -1,19 +1,27 @@
 const joi = require('joi');
+const validateCNPJ = require('../utils/validateCNPJ');
 
 const rentalPost = joi.object({
     name: joi.string().required(),
     cnpj: joi.string().required(),
     activities: joi.string().required(),
-    address: joi.array().min(1).unique().required().items(joi.object({
+    address: joi.object({
         cep: joi.string().required(),
         number: joi.string().required(),
-        isFilial: joi.boolean().valid("true", "false").required(),
-    }))
+        isFilial: joi.string().valid('true', 'false').required(),
+    }).min(1).required()
 })
 
 module.exports = async (req, res, next) => {
     try {
         const reqBody = req.body;
+
+        if (!validateCNPJ(reqBody.cnpj)) {
+            return res.status(400).json({
+                message: "Your cnpj is invalid"
+            })
+        }
+
         if (req.method == "POST") {
             await rentalPost.validateAsync({ ...reqBody });
             next();

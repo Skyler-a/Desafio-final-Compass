@@ -1,8 +1,10 @@
 const rentalRepository = require('../repository/rentalRepository');
+const getCep = require('../utils/callCepApi');
 
 class rentalService {
     async createRental(payload) {
-        const result = await rentalRepository.createRental(payload)
+        const informations = await getCep(payload)
+        const result = await rentalRepository.createRental(informations)
         return result
     }
     async findRental(payload) {
