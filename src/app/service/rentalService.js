@@ -8,8 +8,14 @@ class rentalService {
         const result = await rentalRepository.createRental(informations)
         return result
     }
-    async findRental(options, payload) {
-        const result = await rentalRepository.findRental(options, payload)
+    async findRental(payload, options) {
+        const { name, cnpj, activities } = payload
+        const query = {
+            name: new RegExp(name),
+            cnpj: new RegExp(cnpj),
+            activities: new RegExp(activities)
+        }
+        const result = await rentalRepository.findRental(query, options)
         return result
     }
     async findRentalById(id) {

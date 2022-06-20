@@ -4,8 +4,8 @@ class rentalRepository {
     async createRental(payload) {
         return rentalSchema.create(payload);
     }
-    async findRental(payload, options) {
-        return rentalSchema.paginate({ page: 1, limit: 20 }, options);
+    async findRental(query, options) {
+        return rentalSchema.paginate(query, { page: 1, limit: 20 }, options);
     }
     async findRentalById(id) {
         return rentalSchema.findById(id);
