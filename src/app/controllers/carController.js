@@ -58,7 +58,6 @@ class carController {
     }
     async updateAcessoriesById(req, res) {
         try {
-            console.log("opa, to na controller")
             const result = await carService.updateAcessoriesById(req.params.accessorieId, req.body);
             return res.status(200).json(result)
         } catch (error) {
