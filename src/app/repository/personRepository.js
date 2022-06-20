@@ -5,7 +5,7 @@ class personRepository {
         return personSchema.create(payload);
     }
     async findPerson(payload, options) {
-        return personSchema.paginate({}, options);
+        return personSchema.paginate(payload, { limit: 20 }, options);
     }
     async findPersonById(payload) {
         return personSchema.findById(payload);
