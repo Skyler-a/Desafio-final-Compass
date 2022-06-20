@@ -8,7 +8,15 @@ class personService {
         return result
     }
     async findPerson(payload, options) {
-        const result = await personRepository.findPerson(payload, options)
+        const { name, cpf, birthDay, email, canDrive } = payload
+        const query = {
+            name: new RegExp(name),
+            cpf: new RegExp(cpf),
+            birthDay: new RegExp(birthDay),
+            email: new RegExp(email),
+            canDrive: new RegExp(canDrive)
+        }
+        const result = await personRepository.findPerson(query, options)
         return result
     }
     async findPersonById(payload) {

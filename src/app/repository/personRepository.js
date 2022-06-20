@@ -4,8 +4,8 @@ class personRepository {
     async createPerson(payload) {
         return personSchema.create(payload);
     }
-    async findPerson(payload, options) {
-        return personSchema.paginate(payload, { limit: 20 }, options);
+    async findPerson(query, options) {
+        return personSchema.paginate(query, { page: 1, limit: 20 }, options);
     }
     async findPersonById(payload) {
         return personSchema.findById(payload);
