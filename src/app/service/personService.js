@@ -4,7 +4,6 @@ const formataCpf = require('../utils/cpfFomate');
 const moment = require('moment');
 class personService {
     async createPerson(payload) {
-        payload.birthDay = moment(payload.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD')
         const result = await personRepository.createPerson(payload)
         return result
     }

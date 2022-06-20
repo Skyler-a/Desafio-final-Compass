@@ -7,6 +7,7 @@ module.exports = (server, routes, prefix = '/api/v1/car') => {
     routes.get("/:id", carController.findCarById)
     routes.delete("/:id", carController.deleteCar)
     routes.put("/:id", carMiddleware, carController.updateCar)
+    routes.put("/:id/accessories/:accessorieId", carController.updateAcessoriesById)
 
     server.use(prefix, routes);
 }

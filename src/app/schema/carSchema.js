@@ -28,6 +28,10 @@ const carSchema = new mongoose.Schema({
     passengersQtd: {
         type: Number,
         required: true
+    },
+    color: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: false, versionKey: false

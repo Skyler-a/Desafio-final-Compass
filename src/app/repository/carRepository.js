@@ -4,8 +4,8 @@ class carRepository {
     async createCar(payload) {
         return carSchema.create(payload);
     }
-    async findCar(payload, options) {
-        return carSchema.paginate({ payload }, options);
+    async findCar(query, options) {
+        return carSchema.paginate(query, { limit: 20 }, options);
     }
     async findCarById(payload) {
         return carSchema.findById(payload);
@@ -16,8 +16,11 @@ class carRepository {
     async updateCar(id, body) {
         return carSchema.findByIdAndUpdate(id, body);
     }
-    async findAccessoriesById(payload) {
-        return carSchema.findById(payload);
+    async updateAcessoriesById(accessorieId, body) {
+        console.log("iae")
+        return carSchema.findOneAndUpdate(
+            { 'accessories._id': accessorieId },
+            { $set: { "accessories.$.description": body.description } });
     }
 }
 module.exports = new carRepository();

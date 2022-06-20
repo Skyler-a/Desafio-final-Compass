@@ -25,7 +25,7 @@ class carController {
     }
     async findCarById(req, res) {
         try {
-            const result = await carService.findCarById(req.params.id);
+            const result = await carService.findCarById(req.params.Id);
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
@@ -56,9 +56,10 @@ class carController {
             return res.status(400).json(error)
         }
     }
-    async findAccessoriesById(req, res) {
+    async updateAcessoriesById(req, res) {
         try {
-            const result = await carService.findAccessoriesById(req.params.id);
+            console.log("opa, to na controller")
+            const result = await carService.updateAcessoriesById(req.params.accessorieId, req.body);
             return res.status(200).json(result)
         } catch (error) {
             return res.status(400).json(error)

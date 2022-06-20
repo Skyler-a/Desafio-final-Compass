@@ -7,7 +7,14 @@ class carService {
         return result
     }
     async findCar(payload, options) {
-        const result = await carRepository.findCar(payload, options)
+        const { model, type, brand, color } = payload
+        const query = {
+            model: new RegExp(model),
+            type: new RegExp(type),
+            brand: new RegExp(brand),
+            color: new RegExp(color)
+        }
+        const result = await carRepository.findCar(query, options)
         return result
     }
     async findCarById(payload) {
@@ -32,9 +39,9 @@ class carService {
         const res = await { message: 'Car updated successfully' }
         return result, res
     }
-    async findAccessoriesById(payload) {
-        console.log(payload)
-        const result = await carRepository.findAccessoriesById(payload)
+    async updateAcessoriesById(accessorieId, body) {
+        console.log("opa, to na service")
+        const result = await carRepository.updateAcessoriesById(accessorieId, body)
         return result
     }
 }
