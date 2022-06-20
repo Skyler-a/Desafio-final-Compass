@@ -10,3 +10,4 @@ class fleetController {
         }
     }
 }
+module.exports = new fleetController();
