@@ -3,7 +3,7 @@ const reserveService = require('../service/reserveService');
 class reserveController {
     async createReserve(req, res) {
         try {
-            const result = await reserveService.createReserve(req.body);
+            const result = await reserveService.createReserve(req.body, req.params.id);
             return res.status(201).json(result);
         } catch (error) {
             return res.status(400).json(error)
