@@ -1,11 +1,10 @@
 const carRepository = require('../repository/carRepository')
+const notFound = require('../utils/notFound');
 
 async function validateCarId(id_car) {
     const car = await carRepository.findCarById(id_car)
-    if (car == null) {
-        return false
-    } else {
-        return true
+    if (!car) {
+        throw new notFound("id_car");
     }
 }
 module.exports = validateCarId;
