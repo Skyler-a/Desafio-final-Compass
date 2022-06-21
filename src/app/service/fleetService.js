@@ -19,5 +19,13 @@ class fleetService {
         const result = await fleetRepository.getFleetById(id_fleet)
         return result
     }
+    async updateFleet(idFleet, payload) {
+        const result = await fleetRepository.updateFleet(idFleet, payload)
+        return result
+    }
+    async deleteFleet(idFleet) {
+        const result = await fleetRepository.deleteFleet(idFleet)
+        return result
+    }
 }
 module.exports = new fleetService();
