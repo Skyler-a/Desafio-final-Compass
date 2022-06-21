@@ -1,5 +1,5 @@
 const joi = require('joi');
-const validateCNPJ = require('../utils/validateCNPJ');
+const validateCNPJ = require('../utils/validateCnpj');
 
 const rentalPost = joi.object({
     name: joi.string().required(),
