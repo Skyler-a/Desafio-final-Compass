@@ -5,11 +5,11 @@ const notFound = require('../utils/notFound');
 class fleetService {
     async createFleet(payload, fleetId) {
         const validationCar = await validateCarId(payload.id_car)
-        const validationRental = await validateRentalId(payload.id_rental, fleetId)
-        if (validationRental == false) {
+        const validationRental = await validateRentalId.validateRentalIdPost(payload.id_rental, fleetId)
+        if (!validationRental) {
             throw new notFound("id_rental");
         }
-        if (validationCar == false) {
+        if (!validationCar) {
             throw new notFound("id_car");
         }
         const result = await fleetRepository.createFleet(payload)
@@ -17,6 +17,10 @@ class fleetService {
     }
     async getFleet(payload, id) {
         const { status, plate } = payload;
+        const validationRental = await validateRentalId.validateRentalIdGet(id)
+        if (!validationRental) {
+            throw new notFound("id_rental");
+        }
         const query = {
             status: new RegExp(status),
             plate: new RegExp(plate),
