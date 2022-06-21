@@ -5,9 +5,9 @@ const validateUserId = require('../utils/validateUserID');
 const notFound = require('../utils/notFound');
 
 class reserveService {
-    async createReserve(payload, id) {
+    async createReserve(payload, rentalId) {
         await validateCarId(payload.id_car)
-        await validateRentalId(id, payload.id_rental)
+        await validateRentalId(rentalId, payload.id_rental)
         await validateUserId(payload.id_user)
         const result = await reserveRepository.createReserve(payload);
         return result
@@ -24,15 +24,20 @@ class reserveService {
         const result = await reserveRepository.getReserve(query);
         return result
     }
-    async getReserveId(idReserve) {
+    async getReserveId(rentalId, idReserve) {
+        await validateRentalId(rentalId)
         const result = await reserveRepository.getReserveId(idReserve);
         return result
     }
-    async updateReserve(idReserve, payload) {
+    async updateReserve(rentalId, idReserve, payload) {
+        await validateCarId(payload.id_car)
+        await validateRentalId(rentalId, payload.id_rental)
+        await validateUserId(payload.id_user)
         const result = await reserveRepository.updateReserve(idReserve, payload);
         return result
     }
-    async deleteReserve(idReserve) {
+    async deleteReserve(rentalId, idReserve) {
+        await validateRentalId(rentalId)
         const result = await reserveRepository.deleteReserve(idReserve);
         return result
     }
