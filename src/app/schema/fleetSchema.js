@@ -16,7 +16,7 @@ const fleetSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: {
-            values: ["avaliable", "unavailable", "rented"]
+            values: ["available", "unavailable", "rented"]
         }
     },
     daily_value: {
