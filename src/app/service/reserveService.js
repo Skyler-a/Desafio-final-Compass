@@ -27,6 +27,9 @@ class reserveService {
     async getReserveId(rentalId, idReserve) {
         await validateRentalId(rentalId)
         const result = await reserveRepository.getReserveId(idReserve);
+        if (!result) {
+            throw new notFound("id_fleet");
+        }
         return result
     }
     async updateReserve(rentalId, idReserve, payload) {
@@ -34,11 +37,17 @@ class reserveService {
         await validateRentalId(rentalId, payload.id_rental)
         await validateUserId(payload.id_user)
         const result = await reserveRepository.updateReserve(idReserve, payload);
+        if (!result) {
+            throw new notFound("id_fleet");
+        }
         return result
     }
     async deleteReserve(rentalId, idReserve) {
         await validateRentalId(rentalId)
         const result = await reserveRepository.deleteReserve(idReserve);
+        if (!result) {
+            throw new notFound("id_fleet");
+        }
         return result
     }
 }
