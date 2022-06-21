@@ -34,6 +34,6 @@ const reserveSchema = new mongoose.Schema({
 
 reserveSchema.plugin(mongoosePaginate);
 
-const Reserve = mongoose.model("Reserve", reserveSchema);
+const reserve = mongoose.model("reserve", reserveSchema);
 
 module.exports = reserve;
