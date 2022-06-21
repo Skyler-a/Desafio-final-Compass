@@ -1,21 +1,32 @@
 const rentalRepository = require('../repository/rentalRepository');
-
+const notFound = require('../utils/notFound');
 class validationRental {
-    async validateRentalIdPost(id_rental, fleetId) {
-        const rental = await rentalRepository.findRentalById(id_rental)
-        const rentalParam = await rentalRepository.findRentalById(fleetId)
+    async validateRentalIdPost(idRentalBody, id) {
+        const rental = await rentalRepository.findRentalById(idRentalBody)
+        const rentalParam = await rentalRepository.findRentalById(id)
         if (!rental || !rentalParam) {
-            return false
-        } else {
-            return true
+            throw new notFound("id_rental");
         }
     }
-    async validateRentalIdGet(id_rental) {
-        const rental = await rentalRepository.findRentalById(id_rental)
+    async validateRentalId(id) {
+        const rental = await rentalRepository.findRentalById(id)
         if (!rental) {
-            return false
-        } else {
-            return true
+            throw new notFound("id_rental");
+        }
+    }
+    async validateRentalIdUpdate(idRentalBody, id) {
+        if (idRentalBody) {
+            const rental = await rentalRepository.findRentalById(idRentalBody)
+            const rentalParam = await rentalRepository.findRentalById(id)
+            if (!rental || !rentalParam) {
+                throw new notFound("id_rental");
+            }
+        }
+        if (id) {
+            const rental = await rentalRepository.findRentalById(id)
+            if (!rental) {
+                throw new notFound("id_rental");
+            }
         }
     }
 

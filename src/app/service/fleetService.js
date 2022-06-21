@@ -3,12 +3,9 @@ const validateCarId = require('../utils/validateIdCar');
 const validateRentalId = require('../utils/validateIdRental');
 const notFound = require('../utils/notFound');
 class fleetService {
-    async createFleet(payload, fleetId) {
+    async createFleet(payload, id) {
         const validationCar = await validateCarId(payload.id_car)
-        const validationRental = await validateRentalId.validateRentalIdPost(payload.id_rental, fleetId)
-        if (!validationRental) {
-            throw new notFound("id_rental");
-        }
+        await validateRentalId.validateRentalIdPost(payload.id_rental, id)
         if (!validationCar) {
             throw new notFound("id_car");
         }
@@ -17,10 +14,7 @@ class fleetService {
     }
     async getFleet(payload, id) {
         const { status, plate } = payload;
-        const validationRental = await validateRentalId.validateRentalIdGet(id)
-        if (!validationRental) {
-            throw new notFound("id_rental");
-        }
+        await validateRentalId.validateRentalId(id)
         const query = {
             status: new RegExp(status),
             plate: new RegExp(plate),
@@ -29,16 +23,32 @@ class fleetService {
         const result = await fleetRepository.getFleet(query)
         return result
     }
-    async getFleetById(id_fleet) {
+    async getFleetById(id, id_fleet) {
+        await validateRentalId.validateRentalId(id)
         const result = await fleetRepository.getFleetById(id_fleet)
+        if (!result) {
+            throw new notFound("id_fleet");
+        }
         return result
     }
-    async updateFleet(idFleet, payload) {
+    async updateFleet(id, idFleet, payload) {
+        const validationCar = await validateCarId(payload.id_car)
+        if (!validationCar) {
+            throw new notFound("id_car");
+        }
+        await validateRentalId.validateRentalIdUpdate(payload.id_rental, id)
         const result = await fleetRepository.updateFleet(idFleet, payload)
+        if (!result) {
+            throw new notFound("id_fleet");
+        }
         return result
     }
-    async deleteFleet(idFleet) {
+    async deleteFleet(id, idFleet) {
+        await validateRentalId.validateRentalId(id)
         const result = await fleetRepository.deleteFleet(idFleet)
+        if (!result) {
+            throw new notFound("id_fleet");
+        }
         return result
     }
 }

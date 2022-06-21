@@ -20,7 +20,7 @@ class fleetController {
     }
     async getFleetByID(req, res) {
         try {
-            const result = await fleetService.getFleetById(req.params.id_fleet);
+            const result = await fleetService.getFleetById(req.params.id, req.params.id_fleet);
             return res.status(200).json(result)
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -28,7 +28,7 @@ class fleetController {
     }
     async updateFleet(req, res) {
         try {
-            const result = await fleetService.updateFleet(req.params.id_fleet, req.body);
+            const result = await fleetService.updateFleet(req.params.id, req.params.id_fleet, req.body);
             return res.status(200).json(result)
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -36,7 +36,7 @@ class fleetController {
     }
     async deleteFleet(req, res) {
         try {
-            const result = await fleetService.deleteFleet(req.params.id_fleet);
+            const result = await fleetService.deleteFleet(req.params.id, req.params.id_fleet);
             return res.status(204).json(result)
         } catch (error) {
             res.status(400).json({ error: error.message });
