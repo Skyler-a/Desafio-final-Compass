@@ -1,5 +1,5 @@
 const reserveService = require('../service/reserveService');
-
+const idNonStandard = require('../utils/idNonStandard');
 class reserveController {
     async createReserve(req, res) {
         try {
@@ -22,6 +22,10 @@ class reserveController {
             const result = await reserveService.getReserveId(req.params.id, req.params.id_reserve);
             return res.status(200).json(result);
         } catch (error) {
+            if (error.kind === "ObjectId") {
+                res.status(400)
+                return res.json(new idNonStandard())
+            }
             return res.status(400).json(error)
         }
     }
@@ -30,6 +34,10 @@ class reserveController {
             const result = await reserveService.updateReserve(req.params.id, req.params.id_reserve, req.body);
             return res.status(200).json(result);
         } catch (error) {
+            if (error.kind === "ObjectId") {
+                res.status(400)
+                return res.json(new idNonStandard())
+            }
             return res.status(400).json(error)
         }
     }
@@ -38,6 +46,10 @@ class reserveController {
             const result = await reserveService.deleteReserve(req.params.id, req.params.id_reserve);
             return res.status(200).json(result);
         } catch (error) {
+            if (error.kind === "ObjectId") {
+                res.status(400)
+                return res.json(new idNonStandard())
+            }
             return res.status(400).json(error)
         }
     }
