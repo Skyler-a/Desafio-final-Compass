@@ -2,8 +2,25 @@ const fleetService = require("../service/fleetService");
 
 class fleetController {
     async createFleet(req, res) {
+        const payload = req.body;
         try {
-            const result = await fleetService.updateAcessoriesById(req.params.id, req.body);
+            const result = await fleetService.createFleet(payload, req.params.id);
+            return res.status(200).json(result)
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+    async getFleet(req, res) {
+        try {
+            const result = await fleetService.getFleet(req.query, req.params.id);
+            return res.status(200).json(result)
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+    async getFleetByID(req, res) {
+        try {
+            const result = await fleetService.getFleetById(req.params.id_fleet);
             return res.status(200).json(result)
         } catch (error) {
             res.status(400).json({ error: error.message });
