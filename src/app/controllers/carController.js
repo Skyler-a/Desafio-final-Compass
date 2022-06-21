@@ -61,6 +61,9 @@ class carController {
             const result = await carService.updateAcessoriesById(req.params.accessorieId, req.body);
             return res.status(200).json(result)
         } catch (error) {
+            if (error.kind === "ObjectId") {
+                return res.json(new idNonStandard())
+            }
             return res.status(400).json(error)
         }
     }
