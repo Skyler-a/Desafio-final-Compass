@@ -20,7 +20,7 @@ class personController {
             const result = await personService.findPerson(payload, options);
             return res.status(200).json(result)
         } catch (error) {
-            return res.status(400).json(error)
+            res.status(400).json(error)
         }
     }
     async findPersonById(req, res) {
@@ -29,9 +29,9 @@ class personController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async deletePerson(req, res) {
@@ -40,9 +40,9 @@ class personController {
             return res.status(204).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async updatePerson(req, res) {
@@ -51,9 +51,9 @@ class personController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
 }

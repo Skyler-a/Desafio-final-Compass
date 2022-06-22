@@ -9,10 +9,9 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            res.status(400).json({ error: error.message });
+            res.status(error.status || 400).json(error)
         }
     }
     async getFleet(req, res) {
@@ -21,10 +20,9 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            res.status(400).json({ error: error.message });
+            res.status(error.status || 400).json(error)
 
         }
     }
@@ -34,10 +32,9 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            res.status(400).json({ error: error.message });
+            res.status(error.status || 400).json(error)
         }
     }
     async updateFleet(req, res) {
@@ -46,10 +43,9 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            res.status(400).json({ error: error.message });
+            res.status(error.status || 400).json(error)
         }
     }
     async deleteFleet(req, res) {
@@ -58,10 +54,9 @@ class fleetController {
             return res.status(204).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            res.status(400).json({ error: error.message });
+            res.status(error.status || 400).json(error)
         }
     }
 }

@@ -6,7 +6,10 @@ class reserveController {
             const result = await reserveService.createReserve(req.body, req.params.id);
             return res.status(201).json(result);
         } catch (error) {
-            return res.status(400).json(error)
+            if (error.kind === "ObjectId") {
+                return res.status(400).json(new idNonStandard())
+            }
+            res.status(error.status || 400).json(error)
         }
     }
     async getReserve(req, res) {
@@ -14,7 +17,10 @@ class reserveController {
             const result = await reserveService.getReserve(req.params.id, req.query);
             return res.status(200).json(result);
         } catch (error) {
-            return res.status(400).json(error)
+            if (error.kind === "ObjectId") {
+                return res.status(400).json(new idNonStandard())
+            }
+            res.status(error.status || 400).json(error)
         }
     }
     async getReserveId(req, res) {
@@ -23,10 +29,9 @@ class reserveController {
             return res.status(200).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async updateReserve(req, res) {
@@ -35,10 +40,9 @@ class reserveController {
             return res.status(200).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async deleteReserve(req, res) {
@@ -47,10 +51,9 @@ class reserveController {
             return res.status(200).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
-                res.status(400)
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
 }

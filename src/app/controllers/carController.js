@@ -6,7 +6,7 @@ class carController {
             const result = await carService.createCar(req.body);
             return res.status(201).json(result);
         } catch (error) {
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async findCar(req, res) {
@@ -29,9 +29,9 @@ class carController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async deleteCar(req, res) {
@@ -40,9 +40,9 @@ class carController {
             return res.status(204).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async updateCar(req, res) {
@@ -51,9 +51,9 @@ class carController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async updateAcessoriesById(req, res) {
@@ -62,9 +62,9 @@ class carController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
 }

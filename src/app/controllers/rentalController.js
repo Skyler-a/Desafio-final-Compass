@@ -7,7 +7,7 @@ class rentalController {
             const result = await rentalService.createRental(req.body);
             return res.status(201).json(result);
         } catch (error) {
-            return res.status(400).json({ error: error.message })
+            res.status(error.status || 400).json(error)
         }
     }
     async findRental(req, res) {
@@ -20,7 +20,7 @@ class rentalController {
             const result = await rentalService.findRental(req.query, options);
             return res.status(200).json(result);
         } catch (error) {
-            return res.status(400).json({ error: error.message })
+            res.status(error.status || 400).json(error)
         }
     }
     async findRentalById(req, res) {
@@ -29,9 +29,9 @@ class rentalController {
             return res.status(200).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async updateRental(req, res) {
@@ -40,9 +40,9 @@ class rentalController {
             return res.status(200).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
     async deleteRental(req, res) {
@@ -51,9 +51,9 @@ class rentalController {
             return res.status(204).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.json(new idNonStandard())
+                return res.status(400).json(new idNonStandard())
             }
-            return res.status(400).json(error)
+            res.status(error.status || 400).json(error)
         }
     }
 }
