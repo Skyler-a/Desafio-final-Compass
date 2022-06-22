@@ -18,7 +18,7 @@ class reserveService {
         const result = await reserveRepository.createReserve(getAllData);
         return result
     }
-    async getReserve(rentalId, payload) {
+    async getReserve(rentalId, payload, options) {
         await validateRentalId(rentalId)
         const { data_start, data_end, id_car, final_value, id_user } = payload;
         const query = {
@@ -29,7 +29,7 @@ class reserveService {
         if (id_car) query.id_car = id_car;
         if (id_user) query.id_user = id_user;
         if (final_value) query.final_value = final_value;
-        const result = await reserveRepository.getReserve(query);
+        const result = await reserveRepository.getReserve(query, options);
         return result
     }
     async getReserveId(rentalId, idReserve) {

@@ -4,8 +4,8 @@ class reserveRepository {
     async createReserve(payload) {
         return reserveSchema.create(payload);
     }
-    async getReserve(query) {
-        return reserveSchema.find(query);
+    async getReserve(query, options) {
+        return reserveSchema.paginate(query, { page: 1, limit: 20, offset: 0 }, options);
     }
     async getReserveId(idReserve) {
         return reserveSchema.findById(idReserve);

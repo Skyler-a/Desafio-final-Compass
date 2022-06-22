@@ -14,7 +14,12 @@ class reserveController {
     }
     async getReserve(req, res) {
         try {
-            const result = await reserveService.getReserve(req.params.id, req.query);
+            const { page, limit } = req.query
+            const options = {
+                page: parseInt(page),
+                limit: parseInt(limit)
+            }
+            const result = await reserveService.getReserve(req.params.id, req.query, options);
             return res.status(200).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
