@@ -3,6 +3,7 @@ const validateCarId = require('../utils/validateIdCar');
 const validateRentalId = require('../utils/validateIdRental');
 const validateUserId = require('../utils/validateUserID');
 const calculateFinalValue = require('../utils/calculateFinalValue');
+const validateUserCanDrive = require('../utils/validateUserDrive');
 const notFound = require('../utils/notFound');
 
 class reserveService {
@@ -10,6 +11,7 @@ class reserveService {
         await validateCarId(payload.id_car)
         await validateRentalId(rentalId, payload.id_rental)
         await validateUserId(payload.id_user)
+        await validateUserCanDrive(payload.id_user)
         const getAllData = await calculateFinalValue(payload)
         const result = await reserveRepository.createReserve(getAllData);
         return result
@@ -21,7 +23,6 @@ class reserveService {
             id_rental: rentalId,
             data_start: new RegExp(data_start),
             data_end: new RegExp(data_end),
-            final_value: final_value
         }
         const result = await reserveRepository.getReserve(query);
         return result
