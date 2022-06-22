@@ -10,13 +10,15 @@ class fleetService {
         return result
     }
     async getFleet(payload, id) {
-        const { status, plate } = payload;
+        const { status, plate, id_car, daily_value } = payload;
         await validateRentalId(id)
         const query = {
             status: new RegExp(status),
             plate: new RegExp(plate),
             id_rental: id
         }
+        if (id_car) query.id_car = id_car;
+        if (daily_value) query.final_value = daily_value;
         const result = await fleetRepository.getFleet(query)
         return result
     }

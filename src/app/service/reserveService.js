@@ -26,6 +26,9 @@ class reserveService {
             data_start: new RegExp(data_start),
             data_end: new RegExp(data_end),
         }
+        if (id_car) query.id_car = id_car;
+        if (id_user) query.id_user = id_user;
+        if (final_value) query.final_value = final_value;
         const result = await reserveRepository.getReserve(query);
         return result
     }
