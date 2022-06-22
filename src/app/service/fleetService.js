@@ -9,7 +9,7 @@ class fleetService {
         const result = await fleetRepository.createFleet(payload)
         return result
     }
-    async getFleet(payload, id) {
+    async getFleet(payload, id, options) {
         const { status, plate, id_car, daily_value } = payload;
         await validateRentalId(id)
         const query = {
@@ -19,7 +19,7 @@ class fleetService {
         }
         if (id_car) query.id_car = id_car;
         if (daily_value) query.final_value = daily_value;
-        const result = await fleetRepository.getFleet(query)
+        const result = await fleetRepository.getFleet(query, options)
         return result
     }
     async getFleetById(id, id_fleet) {

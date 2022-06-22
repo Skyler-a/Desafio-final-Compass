@@ -4,8 +4,8 @@ class fleetRepository {
     async createFleet(payload) {
         return fleetSchema.create(payload)
     }
-    async getFleet(query) {
-        return fleetSchema.find(query)
+    async getFleet(query, options) {
+        return fleetSchema.paginate(query, { page: 1, limit: 20, offset: 0 }, options)
     }
     async getFleetById(id_fleet) {
         return fleetSchema.findById(id_fleet)

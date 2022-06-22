@@ -16,7 +16,12 @@ class fleetController {
     }
     async getFleet(req, res) {
         try {
-            const result = await fleetService.getFleet(req.query, req.params.id);
+            const { page, limit } = req.query
+            const options = {
+                page: parseInt(page),
+                limit: parseInt(limit)
+            }
+            const result = await fleetService.getFleet(req.query, req.params.id, options);
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
