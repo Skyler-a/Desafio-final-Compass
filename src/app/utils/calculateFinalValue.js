@@ -9,7 +9,7 @@ async function calculateFinalValue(payload) {
         id_car: id_car
     }
     const getCar = await fleetRepository.getFleet(queryCar);
-    const getDailyValue = getCar[0].daily_value
+    const getDailyValue = getCar.docs[0].daily_value
     const getDates = await moment(data_end, "DD/MM/YYYY").diff(moment(data_start, "DD/MM/YYYY"), "days");
     const calculateValues = getDailyValue * getDates;
     data.push({
