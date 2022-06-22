@@ -22,7 +22,7 @@ class fleetController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
 
         }
     }
@@ -34,7 +34,7 @@ class fleetController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async updateFleet(req, res) {
@@ -45,7 +45,7 @@ class fleetController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async deleteFleet(req, res) {
@@ -56,7 +56,7 @@ class fleetController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
 }

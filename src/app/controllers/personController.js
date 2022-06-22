@@ -31,7 +31,7 @@ class personController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async deletePerson(req, res) {
@@ -42,7 +42,7 @@ class personController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async updatePerson(req, res) {
@@ -53,7 +53,7 @@ class personController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
 }

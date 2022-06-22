@@ -7,7 +7,7 @@ class rentalController {
             const result = await rentalService.createRental(req.body);
             return res.status(201).json(result);
         } catch (error) {
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async findRental(req, res) {
@@ -20,7 +20,7 @@ class rentalController {
             const result = await rentalService.findRental(req.query, options);
             return res.status(200).json(result);
         } catch (error) {
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async findRentalById(req, res) {
@@ -31,7 +31,7 @@ class rentalController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async updateRental(req, res) {
@@ -42,7 +42,7 @@ class rentalController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async deleteRental(req, res) {
@@ -53,7 +53,7 @@ class rentalController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
 }

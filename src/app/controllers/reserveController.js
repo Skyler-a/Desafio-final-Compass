@@ -9,7 +9,7 @@ class reserveController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async getReserve(req, res) {
@@ -20,7 +20,7 @@ class reserveController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async getReserveId(req, res) {
@@ -31,7 +31,7 @@ class reserveController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async updateReserve(req, res) {
@@ -42,7 +42,7 @@ class reserveController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async deleteReserve(req, res) {
@@ -53,7 +53,7 @@ class reserveController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
 }

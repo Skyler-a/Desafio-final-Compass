@@ -6,7 +6,7 @@ class carController {
             const result = await carService.createCar(req.body);
             return res.status(201).json(result);
         } catch (error) {
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async findCar(req, res) {
@@ -20,7 +20,7 @@ class carController {
             const result = await carService.findCar(payload, options);
             return res.status(200).json(result)
         } catch (error) {
-            return res.status(500).json(error)
+            return res.status(500).json(error.message)
         }
     }
     async findCarById(req, res) {
@@ -31,7 +31,7 @@ class carController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async deleteCar(req, res) {
@@ -42,7 +42,7 @@ class carController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async updateCar(req, res) {
@@ -53,7 +53,7 @@ class carController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
     async updateAcessoriesById(req, res) {
@@ -64,7 +64,7 @@ class carController {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())
             }
-            res.status(error.status || 400).json(error)
+            res.status(error.status || 400).json(error.message)
         }
     }
 }
