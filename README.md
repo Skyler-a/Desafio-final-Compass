@@ -17,7 +17,9 @@
 
 [API-Carros](#Api-Carros)
 
-[API-Pessoas](#Api-Pessoas)
+[API-Pessoas](#Api-Pessoa)
+
+[API-Locadoras](#Api-Locadoras)
 
 [API-Frota](#Api-Frota)
 
@@ -71,6 +73,7 @@ npm start
 - [Moment](https://momentjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
+- [Axios](https://axios-http.com/docs/intro)
 
 ## API-Carros
 
@@ -134,8 +137,7 @@ npm start
       }
     ],
     "passengersQtd": 4
-  },
-    }]
+}]
 ```
 ## API-Pessoa
 
@@ -191,107 +193,65 @@ npm start
   }
 ```
 
-## API-Frota
+## Api-Locadoras
 
-### Cadastrar Frota
+###Localizar uma locadora
 
-``/api/v1/rental/:id/fleet``
-
-```bash
-{
-    "id_car": "62b0cddd16dda2a8dddc8c2b",
-    "id_rental": "62a93069d55783af0f37ce79",
-    "status": "avaliable",
-    "daily_value": 100,
-    "plate": "AB211"
-  }
-```
-
-- Todos os campos são required
-- id_car representa um ID de um carro
-- id_rental representa um ID de uma locadora
-- status precisa ser available, unavailable, rented
-- Não pode haver um mais de um carro com a mesma placa 
-
-### Buscar Frota
-
-``/api/v1/rental/:id/fleet`` <br>
-``/api/v1/rental/:id/fleet?query=value``
+``/api/v1/rental`` <br>
+``/api/v1/rental?query=value``<br>
+``/api/v1/rental/:id``
 
 ```bash
 [{
-    "_id": "62b0fb66960928a6c4ffc3af",
-    "id_car": "62b0cddd16dda2a8dddc8c2b",
-    "id_rental": "62a93069d55783af0f37ce79",
-    "status": "avaliable",
-    "daily_value": 100,
-    "plate": "AB211"
+    "name": "Gran Car Locadoras",
+      "cnpj": "62639504000103",
+      "activities": "Aluguel de Carros E Gestão de Frotas",
+      "address": [
+        {
+          "cep": "96200-500",
+          "number": "1234",
+          "isFilial": "true",
+          "street": "Rua tal",
+          "neighborhood": "Bairro tal",
+          "city": "Belém",
+          "state": "PA",
+          "_id": "62a92f23d55783af0f37ce6f"
+        }
+      ]
 }]
 ```
 
-### Deletar uma frota
+### Cadastrar uma locadora
 
-``/api/v1/rental/:id/fleet:id``
-
-### Atualizar uma frota
-
-``/api/v1/rental/:id/fleet:id``
-
-```bash
-  {
-  "status": "rented"
-  }
-```
-## API-Reserva
-
-### Cadastrar Reserva
-
-``/api/v1/rental/:id/reserve``
-
-```bash
-{
-    "id_user": "62a9e9ce7f59dc67201cd288",
-    "data_start": "20/07/2022",
-    "data_end": "22/07/2022",
-    "id_car": "62b0cddd16dda2a8dddc8c2b",
-    "id_rental": "62a93069d55783af0f37ce79"
-  }
-```
-
-- Todos os campos são required
-- id_car representa um ID de um carro
-- id_rental representa um ID de uma locadora
-- id_user representa um ID de usuário que PODE dirigir
-- Data_star não pode ser menor que data_end e vice versa
-- Final value é calculado de acordo com o valor diário
-
-### Buscar Frota
-
-``/api/v1/rental/:id/reserve`` <br>
-``/api/v1/rental/:id/reserve?query=value``
+``/api/v1/rental``
 
 ```bash
 [{
-    "_id": "62b27db06aac910ac2079a33",
-    "id_user": "62a9e9ce7f59dc67201cd288",
-    "data_start": "20/07/2022",
-    "data_end": "22/07/2022",
-    "id_car": "62b0cddd16dda2a8dddc8c2b",
-    "id_rental": "62a93069d55783af0f37ce79",
-    "final_value": 200
+    "name": "Gran Car Locadoras",
+      "cnpj": "62639504000103",
+      "activities": "Aluguel de Carros E Gestão de Frotas",
+      "address": {
+          "cep": "96200-500",
+          "number": "1234",
+          "isFilial": "true"
+      }
 }]
 ```
 
-### Deletar uma reserva
+- Todos os campos são required, exceto o campo complemento
+- Não é possível haver CNPJs duplicados
 
-``/api/v1/rental/:id/reserve:id``
 
-### Atualizar uma reserva
+### Deletar uma locadora
 
-``/api/v1/rental/:id/reserve:id``
+``/api/v1/rental/:id``
+
+### Atualizar uma locadora
+
+``/api/v1/rental/:id``
 
 ```bash
   {
-  "data_end": "23/07/2022"
+  "name": "Locadoras Almir"
   }
 ```
