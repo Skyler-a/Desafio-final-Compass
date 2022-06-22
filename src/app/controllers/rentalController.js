@@ -7,7 +7,7 @@ class rentalController {
             const result = await rentalService.createRental(req.body);
             return res.status(201).json(result);
         } catch (error) {
-            return res.status(400).json(error)
+            return res.status(400).json({ error: error.message })
         }
     }
     async findRental(req, res) {
@@ -20,7 +20,7 @@ class rentalController {
             const result = await rentalService.findRental(req.query, options);
             return res.status(200).json(result);
         } catch (error) {
-            return res.status(400).json(error)
+            return res.status(400).json({ error: error.message })
         }
     }
     async findRentalById(req, res) {
