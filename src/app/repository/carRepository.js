@@ -17,7 +17,6 @@ class carRepository {
         return carSchema.findByIdAndUpdate(id, body);
     }
     async updateAcessoriesById(accessorieId, body) {
-        console.log("iae")
         return carSchema.findOneAndUpdate(
             { 'accessories._id': accessorieId },
             { $set: { "accessories.$.description": body.description } });

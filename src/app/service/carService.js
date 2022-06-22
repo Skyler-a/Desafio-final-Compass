@@ -40,7 +40,6 @@ class carService {
         return result, res
     }
     async updateAcessoriesById(accessorieId, body) {
-        console.log("opa, to na service")
         const result = await carRepository.updateAcessoriesById(accessorieId, body)
         return result
     }
