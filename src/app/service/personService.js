@@ -36,7 +36,6 @@ class personService {
         return result
     }
     async updatePerson(id, body) {
-        body.birthDay = moment(body.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD')
         const result = await personRepository.updatePerson(id, body);
         if (result == null) {
             throw new notFound("id");
