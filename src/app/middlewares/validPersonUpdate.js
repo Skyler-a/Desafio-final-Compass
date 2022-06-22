@@ -16,13 +16,15 @@ const personPut = joi.object({
 module.exports = async (req, res, next) => {
     try {
         const reqBody = req.body;
-        const birthDay = moment(reqBody.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD')
-        const birthDayIsInvalid = moment().diff(birthDay, 'years', false) < 18
+        if (reqBody.birthDay) {
+            const birthDay = moment(reqBody.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD')
+            const birthDayIsInvalid = moment().diff(birthDay, 'years', false) < 18
 
-        if (birthDayIsInvalid) {
-            return res.status(400).json({
-                message: "Your age must be at least 18 years old"
-            })
+            if (birthDayIsInvalid) {
+                return res.status(400).json({
+                    message: "Your age must be at least 18 years old"
+                })
+            }
         }
 
         if (!validateCpf(reqBody.cpf)) {
@@ -32,7 +34,7 @@ module.exports = async (req, res, next) => {
         }
 
         if (req.method == "PUT") {
-            await personPut.validateAsync({ ...reqBody, birthDay });
+            await personPut.validateAsync({ ...reqBody });
             next();
         }
     } catch (error) {
