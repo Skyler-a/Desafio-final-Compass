@@ -1,7 +1,7 @@
 const personRepository = require('../repository/personRepository');
 const notFound = require('../utils/notFound');
 const formataCpf = require('../utils/cpfFomate');
-const moment = require('moment');
+
 class personService {
     async createPerson(payload) {
         const result = await personRepository.createPerson(payload)
