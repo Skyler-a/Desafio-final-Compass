@@ -19,6 +19,9 @@
 
 [API-Pessoas](#Api-Pessoas)
 
+[API-Frota](#Api-Frota)
+
+[API-Reserva](#Api-Reserva)
 
 
 
@@ -185,5 +188,110 @@ npm start
 ```bash
   {
   "name": "Roberto"
+  }
+```
+
+## API-Frota
+
+### Cadastrar Frota
+
+``/api/v1/rental/:id/fleet``
+
+```bash
+{
+    "id_car": "62b0cddd16dda2a8dddc8c2b",
+    "id_rental": "62a93069d55783af0f37ce79",
+    "status": "avaliable",
+    "daily_value": 100,
+    "plate": "AB211"
+  }
+```
+
+- Todos os campos são required
+- id_car representa um ID de um carro
+- id_rental representa um ID de uma locadora
+- status precisa ser available, unavailable, rented
+- Não pode haver um mais de um carro com a mesma placa 
+
+### Buscar Frota
+
+``/api/v1/rental/:id/fleet`` <br>
+``/api/v1/rental/:id/fleet?query=value``
+
+```bash
+[{
+    "_id": "62b0fb66960928a6c4ffc3af",
+    "id_car": "62b0cddd16dda2a8dddc8c2b",
+    "id_rental": "62a93069d55783af0f37ce79",
+    "status": "avaliable",
+    "daily_value": 100,
+    "plate": "AB211"
+}]
+```
+
+### Deletar uma frota
+
+``/api/v1/rental/:id/fleet:id``
+
+### Atualizar uma frota
+
+``/api/v1/rental/:id/fleet:id``
+
+```bash
+  {
+  "status": "rented"
+  }
+```
+## API-Reserva
+
+### Cadastrar Reserva
+
+``/api/v1/rental/:id/reserve``
+
+```bash
+{
+    "id_user": "62a9e9ce7f59dc67201cd288",
+    "data_start": "20/07/2022",
+    "data_end": "22/07/2022",
+    "id_car": "62b0cddd16dda2a8dddc8c2b",
+    "id_rental": "62a93069d55783af0f37ce79"
+  }
+```
+
+- Todos os campos são required
+- id_car representa um ID de um carro
+- id_rental representa um ID de uma locadora
+- id_user representa um ID de usuário que PODE dirigir
+- Data_star não pode ser menor que data_end e vice versa
+- Final value é calculado de acordo com o valor diário
+
+### Buscar Frota
+
+``/api/v1/rental/:id/reserve`` <br>
+``/api/v1/rental/:id/reserve?query=value``
+
+```bash
+[{
+    "_id": "62b27db06aac910ac2079a33",
+    "id_user": "62a9e9ce7f59dc67201cd288",
+    "data_start": "20/07/2022",
+    "data_end": "22/07/2022",
+    "id_car": "62b0cddd16dda2a8dddc8c2b",
+    "id_rental": "62a93069d55783af0f37ce79",
+    "final_value": 200
+}]
+```
+
+### Deletar uma reserva
+
+``/api/v1/rental/:id/reserve:id``
+
+### Atualizar uma reserva
+
+``/api/v1/rental/:id/reserve:id``
+
+```bash
+  {
+  "data_end": "23/07/2022"
   }
 ```
