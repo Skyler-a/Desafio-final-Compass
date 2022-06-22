@@ -53,7 +53,7 @@ class reserveController {
     async deleteReserve(req, res) {
         try {
             const result = await reserveService.deleteReserve(req.params.id, req.params.id_reserve);
-            return res.status(200).json(result);
+            return res.status(204).json(result);
         } catch (error) {
             if (error.kind === "ObjectId") {
                 return res.status(400).json(new idNonStandard())

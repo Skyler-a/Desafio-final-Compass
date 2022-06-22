@@ -44,6 +44,9 @@ class reserveService {
         await validateCarId(payload.id_car)
         await validateRentalId(rentalId, payload.id_rental)
         await validateUserId(payload.id_user)
+        if (payload.data_start || payload.data_end) {
+            await validateDateRented(payload.data_start, payload.data_end)
+        }
         const result = await reserveRepository.updateReserve(idReserve, payload);
         if (!result) {
             throw new notFound("id_fleet");
