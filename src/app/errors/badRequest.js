@@ -1,14 +1,14 @@
-class invalidDrive extends Error {
+class BadRequest extends Error {
     constructor(field) {
         super();
-        this.name = "Invalid Drive value";
+        this.name = "Bad Request";
         this.status = 400;
         this.message = [
             {
                 message: this.name,
-                details: [{ message: `You can not Drive` }]
+                details: [{ message: `Mensagem de teste por hora kek` }]
             }];
     }
 }
 
-module.exports = invalidDrive;
+module.exports = BadRequest;

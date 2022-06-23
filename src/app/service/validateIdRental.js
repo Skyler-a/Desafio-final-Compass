@@ -1,5 +1,5 @@
 const rentalRepository = require('../repository/rentalRepository');
-const notFound = require('../utils/notFound');
+const notFound = require('../errors/notFound');
 
 async function validateRentalId(idRentalParam, idRentalBody) {
     if (idRentalBody) {

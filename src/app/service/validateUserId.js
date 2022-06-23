@@ -1,5 +1,5 @@
 const personRepository = require('../repository/personRepository');
-const notFound = require('../utils/notFound');
+const notFound = require('../errors/notFound');
 
 async function validatePersonId(idPerson) {
     if (idPerson) {

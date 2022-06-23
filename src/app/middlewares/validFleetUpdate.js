@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-const fleetPost = joi.object({
+const fleetUpdate = joi.object({
     id_car: joi.string(),
     id_rental: joi.string(),
     status: joi.string().valid("available", "unavailable", "rented"),
@@ -11,11 +11,8 @@ const fleetPost = joi.object({
 module.exports = async (req, res, next) => {
     const reqBody = req.body;
     try {
-
-        if (req.method == "PUT") {
-            await fleetPost.validateAsync({ ...reqBody });
-            next();
-        }
+        await fleetUpdate.validateAsync({ ...reqBody });
+        next();
     } catch (error) {
         return res.status(400).json({
             error: error.message

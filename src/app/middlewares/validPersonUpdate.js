@@ -1,16 +1,15 @@
 const joi = require("joi");
 const moment = require("moment");
 const validateCpf = require("../utils/validateCpf");
-const invalidField = require("../utils/invalidField");
-const invalidEnum = require("../utils/invalidEnum");
+
 
 const personPut = joi.object({
-    name: joi.string().min(4).error(new invalidField("name")),
-    cpf: joi.string().error(new invalidField("cpf")),
-    birthDay: joi.string().error(new invalidField("birthDay")),
-    email: joi.string().email().error(new invalidField("email")),
-    password: joi.string().min(6).error(new invalidField("password")),
-    canDrive: joi.string().valid("yes", "no").error(new invalidEnum("canDrive"))
+    name: joi.string().min(4),
+    cpf: joi.string(),
+    birthDay: joi.string(),
+    email: joi.string().email(),
+    password: joi.string().min(6),
+    canDrive: joi.string().valid("yes", "no")
 })
 
 module.exports = async (req, res, next) => {
@@ -33,10 +32,9 @@ module.exports = async (req, res, next) => {
             })
         }
 
-        if (req.method == "PUT") {
-            await personPut.validateAsync({ ...reqBody });
-            next();
-        }
+        await personPut.validateAsync({ ...reqBody });
+        next();
+
     } catch (error) {
         return res.status(400).json(error.message)
     }

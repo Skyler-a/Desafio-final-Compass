@@ -13,10 +13,9 @@ module.exports = async (req, res, next) => {
     const reqBody = req.body;
     try {
 
-        if (req.method == "PUT") {
-            await reservePost.validateAsync({ ...reqBody });
-            next();
-        }
+        await reservePost.validateAsync({ ...reqBody });
+        next();
+
     } catch (error) {
         return res.status(400).json({
             error: error.message

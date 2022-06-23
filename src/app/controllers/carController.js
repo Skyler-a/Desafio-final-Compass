@@ -1,5 +1,5 @@
 const carService = require('../service/carService');
-const idNonStandard = require('../utils/idNonStandard');
+
 class carController {
     async createCar(req, res) {
         try {
@@ -29,7 +29,7 @@ class carController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
@@ -40,7 +40,7 @@ class carController {
             return res.status(204).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
@@ -51,7 +51,7 @@ class carController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
@@ -62,7 +62,7 @@ class carController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }

@@ -11,11 +11,8 @@ const fleetPost = joi.object({
 module.exports = async (req, res, next) => {
     const reqBody = req.body;
     try {
-
-        if (req.method == "POST") {
-            await fleetPost.validateAsync({ ...reqBody });
-            next();
-        }
+        await fleetPost.validateAsync({ ...reqBody });
+        next();
     } catch (error) {
         return res.status(400).json({
             error: error.message

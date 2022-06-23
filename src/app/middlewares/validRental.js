@@ -22,10 +22,9 @@ module.exports = async (req, res, next) => {
             })
         }
 
-        if (req.method == "POST") {
-            await rentalPost.validateAsync({ ...reqBody });
-            next();
-        }
+        await rentalPost.validateAsync({ ...reqBody });
+        next();
+
 
     } catch (error) {
         return res.status(400).json(error.message)

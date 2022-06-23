@@ -1,6 +1,6 @@
 const rentalRepository = require('../repository/rentalRepository');
-const getCep = require('../utils/callCepApi');
-const notFound = require('../utils/notFound');
+const getCep = require('./callCepApi');
+const notFound = require('../errors/notFound');
 
 class rentalService {
     async createRental(payload) {

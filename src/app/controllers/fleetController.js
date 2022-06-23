@@ -1,5 +1,5 @@
 const fleetService = require("../service/fleetService");
-const idNonStandard = require('../utils/idNonStandard');
+
 
 class fleetController {
     async createFleet(req, res) {
@@ -9,7 +9,7 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error)
         }
@@ -25,7 +25,7 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
 
@@ -37,7 +37,7 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
@@ -48,7 +48,7 @@ class fleetController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
@@ -59,7 +59,7 @@ class fleetController {
             return res.status(204).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }

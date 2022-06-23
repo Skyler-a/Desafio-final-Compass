@@ -1,5 +1,5 @@
 const axios = require('axios')
-const notFound = require('../utils/notFound')
+const notFound = require('../errors/notFound')
 async function getCep(payload) {
     const informations = []
     const { address } = payload

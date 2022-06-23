@@ -1,7 +1,7 @@
 const fleetRepository = require('../repository/fleetRepository');
-const validateCarId = require('../utils/validateIdCar');
-const validateRentalId = require('../utils/validateIdRental');
-const notFound = require('../utils/notFound');
+const validateCarId = require('./validateIdCar');
+const validateRentalId = require('./validateIdRental');
+const notFound = require('../errors/notFound');
 class fleetService {
     async createFleet(payload, id) {
         await validateCarId(payload.id_car)

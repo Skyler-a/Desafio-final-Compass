@@ -1,11 +1,11 @@
 const reserveRepository = require('../repository/reserveRepository');
-const validateCarId = require('../utils/validateIdCar');
-const validateRentalId = require('../utils/validateIdRental');
-const validateUserId = require('../utils/validateUserId');
-const calculateFinalValue = require('../utils/calculateFinalValue');
-const validateUserCanDrive = require('../utils/validateUserDrive');
-const validateDateRented = require('../utils/validateDateRented');
-const notFound = require('../utils/notFound');
+const validateCarId = require('./validateIdCar');
+const validateRentalId = require('./validateIdRental');
+const validateUserId = require('./validateUserId');
+const calculateFinalValue = require('./calculateFinalValue');
+const validateUserCanDrive = require('./validateUserDrive');
+const validateDateRented = require('./validateDateRented');
+const notFound = require('../errors/notFound');
 
 class reserveService {
     async createReserve(payload, rentalId) {

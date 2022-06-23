@@ -22,10 +22,10 @@ module.exports = async (req, res, next) => {
             })
         }
 
-        if (req.method == "PUT") {
-            await rentalUpdate.validateAsync({ ...reqBody });
-            next();
-        }
+
+        await rentalUpdate.validateAsync({ ...reqBody });
+        next();
+
 
     } catch (error) {
         return res.status(400).json(error.message)

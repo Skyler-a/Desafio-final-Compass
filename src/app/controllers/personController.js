@@ -1,5 +1,5 @@
 const personService = require('../service/personService');
-const idNonStandard = require('../utils/idNonStandard');
+
 class personController {
     async createPerson(req, res) {
         try {
@@ -29,7 +29,7 @@ class personController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
@@ -40,7 +40,7 @@ class personController {
             return res.status(204).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
@@ -51,7 +51,7 @@ class personController {
             return res.status(200).json(result)
         } catch (error) {
             if (error.kind === "ObjectId") {
-                return res.status(400).json(new idNonStandard())
+                return res.status(400)
             }
             res.status(error.status || 400).json(error.message)
         }
