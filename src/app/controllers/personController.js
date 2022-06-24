@@ -1,5 +1,6 @@
 /* eslint-disable radix */
 const personService = require("../service/personService");
+const BadRequest = require("../errors/badRequest");
 
 class PersonController {
   async createPerson(req, res) {
@@ -32,7 +33,7 @@ class PersonController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -44,7 +45,7 @@ class PersonController {
       return res.status(204).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -56,7 +57,7 @@ class PersonController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }

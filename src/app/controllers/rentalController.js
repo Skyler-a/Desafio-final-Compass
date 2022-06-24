@@ -1,5 +1,6 @@
 /* eslint-disable radix */
 const rentalService = require("../service/rentalService");
+const BadRequest = require("../errors/badRequest");
 
 class RentalController {
   async createRental(req, res) {
@@ -31,7 +32,7 @@ class RentalController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -43,7 +44,7 @@ class RentalController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -55,7 +56,7 @@ class RentalController {
       return res.status(204).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }

@@ -1,5 +1,6 @@
 /* eslint-disable radix */
 const reserveService = require("../service/reserveService");
+const BadRequest = require("../errors/badRequest");
 
 class ReserveController {
   async createReserve(req, res) {
@@ -11,7 +12,7 @@ class ReserveController {
       return res.status(201).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -32,7 +33,7 @@ class ReserveController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -47,7 +48,7 @@ class ReserveController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -63,7 +64,7 @@ class ReserveController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -78,7 +79,7 @@ class ReserveController {
       return res.status(204).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }

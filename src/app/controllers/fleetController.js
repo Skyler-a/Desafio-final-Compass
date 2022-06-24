@@ -1,5 +1,6 @@
 /* eslint-disable radix */
 const fleetService = require("../service/fleetService");
+const BadRequest = require("../errors/badRequest");
 
 class FleetController {
   async createFleet(req, res) {
@@ -30,7 +31,7 @@ class FleetController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -45,7 +46,7 @@ class FleetController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -61,7 +62,7 @@ class FleetController {
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
@@ -76,7 +77,7 @@ class FleetController {
       return res.status(204).json(result);
     } catch (error) {
       if (error.kind === "ObjectId") {
-        return res.status(400);
+        return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
     }
