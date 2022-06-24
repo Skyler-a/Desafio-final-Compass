@@ -1,4 +1,5 @@
-const joi = require('joi');
+const joi = require('joi').extend(require('@joi/date'));
+
 const moment = require('moment');
 const validateCpf = require('../utils/validateCpf');
 

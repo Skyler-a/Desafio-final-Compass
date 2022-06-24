@@ -1,4 +1,4 @@
-const joi = require('joi');
+const joi = require('joi').extend(require('@joi/date'));
 
 const reservePost = joi.object({
   id_user: joi.string().required(),
