@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('dotenv').config();
 
 class Database {
   constructor() {
@@ -6,9 +8,7 @@ class Database {
   }
 
   connect() {
-    return mongoose.connect(
-      `mongodb+srv://Compass:Compass134@desafio-final.ovbf0hj.mongodb.net/?retryWrites=true&w=majority`
-    );
+    return mongoose.connect(process.env.DB_LINK);
   }
 }
 module.exports = new Database().connect();
