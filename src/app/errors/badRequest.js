@@ -1,12 +1,12 @@
 class BadRequest extends Error {
-    constructor(field) {
+    constructor(message) {
         super();
-        this.name = "Bad Request";
+        this.name = "BadRequest";
         this.status = 400;
         this.message = [
             {
                 message: this.name,
-                details: [{ message: `Mensagem de teste por hora kek` }]
+                details: [{ message: `${message}` }]
             }];
     }
 }
