@@ -21,13 +21,16 @@ const carUpdate = joi.object({
 });
 
 module.exports = async (req, res, next) => {
-  const reqBody = req.body;
   try {
-    await carUpdate.validateAsync({ ...reqBody });
+    const { error } = await carUpdate.validateAsync(req.body, { abortEarly: false });
+    if (error) throw new Error();
     return next();
   } catch (error) {
-    return res.status(400).json({
-      error: error.message
-    });
+    return res.status(400).json(
+      error.details.map((detail) => ({
+        description: detail.message,
+        name: detail.path.join('.')
+      }))
+    );
   }
 };

@@ -20,13 +20,16 @@ const carPost = joi.object({
 });
 
 module.exports = async (req, res, next) => {
-  const reqBody = req.body;
   try {
-    await carPost.validateAsync({ ...reqBody });
+    const { error } = await carPost.validateAsync(req.body, { abortEarly: false });
+    if (error) throw new Error();
     return next();
   } catch (error) {
-    return res.status(error.status).json({
-      error: error.message
-    });
+    return res.status(400).json(
+      error.details.map((detail) => ({
+        description: detail.message,
+        name: detail.path.join('.')
+      }))
+    );
   }
 };
