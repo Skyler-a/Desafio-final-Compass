@@ -1,46 +1,50 @@
-const personRepository = require('../repository/personRepository');
-const notFound = require('../errors/notFound');
-const formataCpf = require('../utils/cpfFomate');
+const PersonRepository = require("../repository/personRepository");
+const NotFound = require("../errors/notFound");
+const formataCpf = require("../utils/cpfFomate");
 
-class personService {
-    async createPerson(payload) {
-        const result = await personRepository.createPerson(payload)
-        return result
+class PersonService {
+  async createPerson(payload) {
+    const result = await PersonRepository.createPerson(payload);
+    return result;
+  }
+
+  async findPerson(payload, options) {
+    const { name, cpf, birthDay, email, canDrive } = payload;
+    const query = {
+      name: new RegExp(name),
+      cpf: new RegExp(cpf),
+      birthDay: new RegExp(birthDay),
+      email: new RegExp(email),
+      canDrive: new RegExp(canDrive),
+    };
+    const result = await PersonRepository.findPerson(query, options);
+    return result;
+  }
+
+  async findPersonById(payload) {
+    const result = await PersonRepository.findPersonById(payload);
+    if (result == null) {
+      throw new NotFound("id");
     }
-    async findPerson(payload, options) {
-        const { name, cpf, birthDay, email, canDrive } = payload
-        const query = {
-            name: new RegExp(name),
-            cpf: new RegExp(cpf),
-            birthDay: new RegExp(birthDay),
-            email: new RegExp(email),
-            canDrive: new RegExp(canDrive)
-        }
-        const result = await personRepository.findPerson(query, options)
-        return result
+    formataCpf(result);
+    return result;
+  }
+
+  async deletePerson(payload) {
+    const result = await PersonRepository.deletePerson(payload);
+    if (result == null) {
+      throw new NotFound("id");
     }
-    async findPersonById(payload) {
-        const result = await personRepository.findPersonById(payload)
-        if (result == null) {
-            throw new notFound("id");
-        }
-        formataCpf(result);
-        return result
+    formataCpf(result);
+    return result;
+  }
+
+  async updatePerson(id, body) {
+    const result = await PersonRepository.updatePerson(id, body);
+    if (result == null) {
+      throw new NotFound("id");
     }
-    async deletePerson(payload) {
-        const result = await personRepository.deletePerson(payload)
-        if (result == null) {
-            throw new notFound("id");
-        }
-        formataCpf(result);
-        return result
-    }
-    async updatePerson(id, body) {
-        const result = await personRepository.updatePerson(id, body);
-        if (result == null) {
-            throw new notFound("id");
-        }
-        return result
-    }
+    return result;
+  }
 }
-module.exports = new personService();
+module.exports = new PersonService();

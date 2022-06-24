@@ -1,43 +1,47 @@
-const rentalRepository = require('../repository/rentalRepository');
-const getCep = require('./callCepApi');
-const notFound = require('../errors/notFound');
+const rentalRepository = require("../repository/rentalRepository");
+const getCep = require("./callCepApi");
+const NotFound = require("../errors/notFound");
 
-class rentalService {
-    async createRental(payload) {
-        const informations = await getCep(payload)
-        const result = await rentalRepository.createRental(informations)
-        return result
+class RentalService {
+  async createRental(payload) {
+    const informations = await getCep(payload);
+    const result = await rentalRepository.createRental(informations);
+    return result;
+  }
+
+  async findRental(payload, options) {
+    const { name, cnpj, activities } = payload;
+    const query = {
+      name: new RegExp(name),
+      cnpj: new RegExp(cnpj),
+      activities: new RegExp(activities),
+    };
+    const result = await rentalRepository.findRental(query, options);
+    return result;
+  }
+
+  async findRentalById(id) {
+    const result = await rentalRepository.findRentalById(id);
+    if (result == null) {
+      throw new NotFound("id");
     }
-    async findRental(payload, options) {
-        const { name, cnpj, activities } = payload
-        const query = {
-            name: new RegExp(name),
-            cnpj: new RegExp(cnpj),
-            activities: new RegExp(activities)
-        }
-        const result = await rentalRepository.findRental(query, options)
-        return result
+    return result;
+  }
+
+  async updateRental(id, body) {
+    const result = await rentalRepository.updateRental(id, body);
+    if (result == null) {
+      throw new NotFound("id");
     }
-    async findRentalById(id) {
-        const result = await rentalRepository.findRentalById(id)
-        if (result == null) {
-            throw new notFound("id");
-        }
-        return result
+    return result;
+  }
+
+  async deleteRental(id) {
+    const result = await rentalRepository.deleteRental(id);
+    if (result == null) {
+      throw new NotFound("id");
     }
-    async updateRental(id, body) {
-        const result = await rentalRepository.updateRental(id, body)
-        if (result == null) {
-            throw new notFound("id");
-        }
-        return result
-    }
-    async deleteRental(id) {
-        const result = await rentalRepository.deleteRental(id)
-        if (result == null) {
-            throw new notFound("id");
-        }
-        return result
-    }
+    return result;
+  }
 }
-module.exports = new rentalService();
+module.exports = new RentalService();

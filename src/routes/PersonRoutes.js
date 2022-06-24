@@ -1,13 +1,13 @@
-const personController = require('../app/controllers/personController');
-const personMiddleware = require('../app/middlewares/validPerson');
-const personUpdateMiddleware = require('../app/middlewares/validPersonUpdate');
+const PersonController = require("../app/controllers/personController");
+const PersonMiddleware = require("../app/middlewares/validPerson");
+const PersonUpdateMiddleware = require("../app/middlewares/validPersonUpdate");
 
-module.exports = (server, routes, prefix = '/api/v1/person') => {
-    routes.post("/", personMiddleware, personController.createPerson)
-    routes.get("/", personController.findPerson)
-    routes.get("/:id", personController.findPersonById)
-    routes.delete("/:id", personController.deletePerson)
-    routes.put("/:id", personUpdateMiddleware, personController.updatePerson)
+module.exports = (server, routes, prefix = "/api/v1/person") => {
+  routes.post("/", PersonMiddleware, PersonController.createPerson);
+  routes.get("/", PersonController.findPerson);
+  routes.get("/:id", PersonController.findPersonById);
+  routes.delete("/:id", PersonController.deletePerson);
+  routes.put("/:id", PersonUpdateMiddleware, PersonController.updatePerson);
 
-    server.use(prefix, routes);
-}
+  server.use(prefix, routes);
+};
