@@ -1,7 +1,7 @@
-const FleetRepository = require("../repository/fleetRepository");
-const validateCarId = require("./validateIdCar");
-const validateRentalId = require("./validateIdRental");
-const NotFound = require("../errors/notFound");
+const FleetRepository = require('../repository/fleetRepository');
+const validateCarId = require('./validateIdCar');
+const validateRentalId = require('./validateIdRental');
+const NotFound = require('../errors/notFound');
 
 class FleetService {
   async createFleet(payload, id) {
@@ -17,7 +17,7 @@ class FleetService {
     const query = {
       status: new RegExp(status),
       plate: new RegExp(plate),
-      id_rental: id,
+      id_rental: id
     };
     if (id_car) query.id_car = id_car;
     if (daily_value) query.final_value = daily_value;
@@ -29,7 +29,7 @@ class FleetService {
     await validateRentalId(id);
     const result = await FleetRepository.getFleetById(id_fleet);
     if (!result) {
-      throw new NotFound("id_fleet");
+      throw new NotFound('id_fleet');
     }
     return result;
   }
@@ -39,7 +39,7 @@ class FleetService {
     await validateRentalId(id, payload.id_rental);
     const result = await FleetRepository.updateFleet(idFleet, payload);
     if (!result) {
-      throw new NotFound("id_fleet");
+      throw new NotFound('id_fleet');
     }
     return result;
   }
@@ -48,7 +48,7 @@ class FleetService {
     await validateRentalId(id);
     const result = await FleetRepository.deleteFleet(idFleet);
     if (!result) {
-      throw new NotFound("id_fleet");
+      throw new NotFound('id_fleet');
     }
     return result;
   }

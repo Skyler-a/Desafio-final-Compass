@@ -1,13 +1,13 @@
 class Conflict extends Error {
   constructor(field) {
     super();
-    this.name = "Conflict";
+    this.name = 'Conflict';
     this.status = 409;
     this.message = [
       {
         message: this.name,
-        details: [{ message: `Your ${field} already exist` }],
-      },
+        details: [{ message: `Your ${field} already exist` }]
+      }
     ];
   }
 }

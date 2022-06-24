@@ -1,47 +1,47 @@
-const mongoose = require("mongoose");
-const paginate = require("mongoose-paginate-v2");
-const bcript = require("bcryptjs");
+const mongoose = require('mongoose');
+const paginate = require('mongoose-paginate-v2');
+const bcript = require('bcryptjs');
 
 const personSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     cpf: {
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
     birthDay: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
     password: {
       type: String,
       required: true,
-      select: false,
+      select: false
     },
     canDrive: {
       type: String,
       enum: {
-        values: ["yes", "no"],
-        required: true,
-      },
-    },
+        values: ['yes', 'no'],
+        required: true
+      }
+    }
   },
   {
     timestamps: false,
-    versionKey: false,
+    versionKey: false
   }
 );
 
-personSchema.pre("save", async function (next) {
+personSchema.pre('save', async function (next) {
   const hash = await bcript.hash(this.password, 10);
   this.password = hash;
   next();
@@ -49,5 +49,5 @@ personSchema.pre("save", async function (next) {
 
 personSchema.plugin(paginate);
 
-const person = mongoose.model("person", personSchema);
+const person = mongoose.model('person', personSchema);
 module.exports = person;

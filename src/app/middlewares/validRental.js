@@ -1,5 +1,5 @@
-const joi = require("joi");
-const validateCNPJ = require("../utils/validateCnpj");
+const joi = require('joi');
+const validateCNPJ = require('../utils/validateCnpj');
 
 const rentalPost = joi.object({
   name: joi.string().required(),
@@ -9,10 +9,10 @@ const rentalPost = joi.object({
     .object({
       cep: joi.string().required(),
       number: joi.string().required(),
-      isFilial: joi.string().valid("true", "false").required(),
+      isFilial: joi.string().valid('true', 'false').required()
     })
     .min(1)
-    .required(),
+    .required()
 });
 
 module.exports = async (req, res, next) => {
@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
 
     if (!validateCNPJ(reqBody.cnpj)) {
       return res.status(400).json({
-        message: "Your cnpj is invalid",
+        message: 'Your cnpj is invalid'
       });
     }
 

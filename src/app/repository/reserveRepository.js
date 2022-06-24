@@ -1,4 +1,4 @@
-const reserveSchema = require("../schema/reserveSchema");
+const reserveSchema = require('../schema/reserveSchema');
 
 class ReserveRepository {
   async createReserve(payload) {
@@ -6,11 +6,7 @@ class ReserveRepository {
   }
 
   async getReserve(query, options) {
-    return reserveSchema.paginate(
-      query,
-      { page: 1, limit: 20, offset: 0 },
-      options
-    );
+    return reserveSchema.paginate(query, { page: 1, limit: 20, offset: 0 }, options);
   }
 
   async getReserveId(idReserve) {

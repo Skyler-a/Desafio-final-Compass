@@ -4,7 +4,7 @@ function validateCpf(cpf) {
 
   let soma = 0;
 
-  if (cpf === "01234567890") return false;
+  if (cpf === '01234567890') return false;
 
   for (let i = 0; i <= 9; i++) {
     const numerosRepetidos = `${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}`;

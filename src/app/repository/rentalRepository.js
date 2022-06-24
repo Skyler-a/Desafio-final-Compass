@@ -1,4 +1,4 @@
-const rentalSchema = require("../schema/rentalSchema");
+const rentalSchema = require('../schema/rentalSchema');
 
 class RentalRepository {
   async createRental(payload) {

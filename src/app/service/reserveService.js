@@ -1,11 +1,11 @@
-const reserveRepository = require("../repository/reserveRepository");
-const validateCarId = require("./validateIdCar");
-const validateRentalId = require("./validateIdRental");
-const validateUserId = require("./validateUserId");
-const calculateFinalValue = require("./calculateFinalValue");
-const validateUserCanDrive = require("./validateUserDrive");
-const validateDateRented = require("./validateDateRented");
-const NotFound = require("../errors/notFound");
+const reserveRepository = require('../repository/reserveRepository');
+const validateCarId = require('./validateIdCar');
+const validateRentalId = require('./validateIdRental');
+const validateUserId = require('./validateUserId');
+const calculateFinalValue = require('./calculateFinalValue');
+const validateUserCanDrive = require('./validateUserDrive');
+const validateDateRented = require('./validateDateRented');
+const NotFound = require('../errors/notFound');
 
 class ReserveService {
   async createReserve(payload, rentalId) {
@@ -25,7 +25,7 @@ class ReserveService {
     const query = {
       id_rental: rentalId,
       data_start: new RegExp(data_start),
-      data_end: new RegExp(data_end),
+      data_end: new RegExp(data_end)
     };
     if (id_car) query.id_car = id_car;
     if (id_user) query.id_user = id_user;
@@ -38,7 +38,7 @@ class ReserveService {
     await validateRentalId(rentalId);
     const result = await reserveRepository.getReserveId(idReserve);
     if (!result) {
-      throw new NotFound("id_fleet");
+      throw new NotFound('id_fleet');
     }
     return result;
   }
@@ -53,7 +53,7 @@ class ReserveService {
     }
     const result = await reserveRepository.updateReserve(idReserve, payload);
     if (!result) {
-      throw new NotFound("id_fleet");
+      throw new NotFound('id_fleet');
     }
     return result;
   }
@@ -62,7 +62,7 @@ class ReserveService {
     await validateRentalId(rentalId);
     const result = await reserveRepository.deleteReserve(idReserve);
     if (!result) {
-      throw new NotFound("id_fleet");
+      throw new NotFound('id_fleet');
     }
     return result;
   }

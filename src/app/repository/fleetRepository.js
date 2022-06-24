@@ -1,4 +1,4 @@
-const fleetSchema = require("../schema/fleetSchema");
+const fleetSchema = require('../schema/fleetSchema');
 
 class FleetRepository {
   async createFleet(payload) {
@@ -6,11 +6,7 @@ class FleetRepository {
   }
 
   async getFleet(query, options) {
-    return fleetSchema.paginate(
-      query,
-      { page: 1, limit: 20, offset: 0 },
-      options
-    );
+    return fleetSchema.paginate(query, { page: 1, limit: 20, offset: 0 }, options);
   }
 
   async getFleetById(id_fleet) {

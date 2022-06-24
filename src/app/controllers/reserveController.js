@@ -1,17 +1,14 @@
 /* eslint-disable radix */
-const reserveService = require("../service/reserveService");
-const BadRequest = require("../errors/badRequest");
+const ReserveService = require('../service/reserveService');
+const BadRequest = require('../errors/badRequest');
 
 class ReserveController {
   async createReserve(req, res) {
     try {
-      const result = await reserveService.createReserve(
-        req.body,
-        req.params.id
-      );
+      const result = await ReserveService.createReserve(req.body, req.params.id);
       return res.status(201).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -23,16 +20,12 @@ class ReserveController {
       const { page, limit } = req.query;
       const options = {
         page: parseInt(page),
-        limit: parseInt(limit),
+        limit: parseInt(limit)
       };
-      const result = await reserveService.getReserve(
-        req.params.id,
-        req.query,
-        options
-      );
+      const result = await ReserveService.getReserve(req.params.id, req.query, options);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -41,13 +34,10 @@ class ReserveController {
 
   async getReserveId(req, res) {
     try {
-      const result = await reserveService.getReserveId(
-        req.params.id,
-        req.params.id_reserve
-      );
+      const result = await ReserveService.getReserveId(req.params.id, req.params.id_reserve);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -56,14 +46,10 @@ class ReserveController {
 
   async updateReserve(req, res) {
     try {
-      const result = await reserveService.updateReserve(
-        req.params.id,
-        req.params.id_reserve,
-        req.body
-      );
+      const result = await ReserveService.updateReserve(req.params.id, req.params.id_reserve, req.body);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -72,13 +58,10 @@ class ReserveController {
 
   async deleteReserve(req, res) {
     try {
-      const result = await reserveService.deleteReserve(
-        req.params.id,
-        req.params.id_reserve
-      );
+      const result = await ReserveService.deleteReserve(req.params.id, req.params.id_reserve);
       return res.status(204).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);

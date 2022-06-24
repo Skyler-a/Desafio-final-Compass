@@ -1,12 +1,12 @@
 /* eslint-disable radix */
 
-const carService = require("../service/carService");
-const BadRequest = require("../errors/badRequest");
+const CarService = require('../service/carService');
+const BadRequest = require('../errors/badRequest');
 
 class CarController {
   async createCar(req, res) {
     try {
-      const result = await carService.createCar(req.body);
+      const result = await CarService.createCar(req.body);
       return res.status(201).json(result);
     } catch (error) {
       return res.status(error.status || 400).json(error.message);
@@ -19,9 +19,9 @@ class CarController {
       const { page, limit } = req.query;
       const options = {
         page: parseInt(page),
-        limit: parseInt(limit),
+        limit: parseInt(limit)
       };
-      const result = await carService.findCar(payload, options);
+      const result = await CarService.findCar(payload, options);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(500).json(error.message);
@@ -30,7 +30,7 @@ class CarController {
 
   async findCarById(req, res) {
     try {
-      const result = await carService.findCarById(req.params.id);
+      const result = await CarService.findCarById(req.params.id);
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === `ObjectId`) {
@@ -42,7 +42,7 @@ class CarController {
 
   async deleteCar(req, res) {
     try {
-      const result = await carService.deleteCar(req.params.id);
+      const result = await CarService.deleteCar(req.params.id);
       return res.status(204).json(result);
     } catch (error) {
       if (error.kind === `ObjectId`) {
@@ -54,7 +54,7 @@ class CarController {
 
   async updateCar(req, res) {
     try {
-      const result = await carService.updateCar(req.params.id, req.body);
+      const result = await CarService.updateCar(req.params.id, req.body);
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === `ObjectId`) {
@@ -66,10 +66,7 @@ class CarController {
 
   async updateAcessoriesById(req, res) {
     try {
-      const result = await carService.updateAcessoriesById(
-        req.params.accessorieId,
-        req.body
-      );
+      const result = await CarService.updateAcessoriesById(req.params.accessorieId, req.body);
       return res.status(200).json(result);
     } catch (error) {
       if (error.kind === `ObjectId`) {

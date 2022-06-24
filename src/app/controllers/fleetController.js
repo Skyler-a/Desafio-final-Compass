@@ -1,15 +1,15 @@
 /* eslint-disable radix */
-const fleetService = require("../service/fleetService");
-const BadRequest = require("../errors/badRequest");
+const FleetService = require('../service/fleetService');
+const BadRequest = require('../errors/badRequest');
 
 class FleetController {
   async createFleet(req, res) {
     const payload = req.body;
     try {
-      const result = await fleetService.createFleet(payload, req.params.id);
+      const result = await FleetService.createFleet(payload, req.params.id);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400);
       }
       return res.status(error.status || 400).json(error);
@@ -21,16 +21,12 @@ class FleetController {
       const { page, limit } = req.query;
       const options = {
         page: parseInt(page),
-        limit: parseInt(limit),
+        limit: parseInt(limit)
       };
-      const result = await fleetService.getFleet(
-        req.query,
-        req.params.id,
-        options
-      );
+      const result = await FleetService.getFleet(req.query, req.params.id, options);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -39,13 +35,10 @@ class FleetController {
 
   async getFleetByID(req, res) {
     try {
-      const result = await fleetService.getFleetById(
-        req.params.id,
-        req.params.id_fleet
-      );
+      const result = await FleetService.getFleetById(req.params.id, req.params.id_fleet);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -54,14 +47,10 @@ class FleetController {
 
   async updateFleet(req, res) {
     try {
-      const result = await fleetService.updateFleet(
-        req.params.id,
-        req.params.id_fleet,
-        req.body
-      );
+      const result = await FleetService.updateFleet(req.params.id, req.params.id_fleet, req.body);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -70,13 +59,10 @@ class FleetController {
 
   async deleteFleet(req, res) {
     try {
-      const result = await fleetService.deleteFleet(
-        req.params.id,
-        req.params.id_fleet
-      );
+      const result = await FleetService.deleteFleet(req.params.id, req.params.id_fleet);
       return res.status(204).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);

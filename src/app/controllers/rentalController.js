@@ -1,11 +1,11 @@
 /* eslint-disable radix */
-const rentalService = require("../service/rentalService");
-const BadRequest = require("../errors/badRequest");
+const RentalService = require('../service/rentalService');
+const BadRequest = require('../errors/badRequest');
 
 class RentalController {
   async createRental(req, res) {
     try {
-      const result = await rentalService.createRental(req.body);
+      const result = await RentalService.createRental(req.body);
       return res.status(201).json(result);
     } catch (error) {
       return res.status(error.status || 400).json(error.message);
@@ -17,9 +17,9 @@ class RentalController {
       const { page, limit } = req.query;
       const options = {
         page: parseInt(page),
-        limit: parseInt(limit),
+        limit: parseInt(limit)
       };
-      const result = await rentalService.findRental(req.query, options);
+      const result = await RentalService.findRental(req.query, options);
       return res.status(200).json(result);
     } catch (error) {
       return res.status(error.status || 400).json(error.message);
@@ -28,10 +28,10 @@ class RentalController {
 
   async findRentalById(req, res) {
     try {
-      const result = await rentalService.findRentalById(req.params.id);
+      const result = await RentalService.findRentalById(req.params.id);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -40,10 +40,10 @@ class RentalController {
 
   async updateRental(req, res) {
     try {
-      const result = await rentalService.updateRental(req.params.id, req.body);
+      const result = await RentalService.updateRental(req.params.id, req.body);
       return res.status(200).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);
@@ -52,10 +52,10 @@ class RentalController {
 
   async deleteRental(req, res) {
     try {
-      const result = await rentalService.deleteRental(req.params.id);
+      const result = await RentalService.deleteRental(req.params.id);
       return res.status(204).json(result);
     } catch (error) {
-      if (error.kind === "ObjectId") {
+      if (error.kind === 'ObjectId') {
         return res.status(400).json(new BadRequest(`Your id is not valid`));
       }
       return res.status(error.status || 400).json(error.message);

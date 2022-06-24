@@ -1,5 +1,5 @@
-const CarRepository = require("../repository/carRepository");
-const NotFound = require("../errors/notFound");
+const CarRepository = require('../repository/carRepository');
+const NotFound = require('../errors/notFound');
 
 class CarService {
   async createCar(payload) {
@@ -13,7 +13,7 @@ class CarService {
       model: new RegExp(model),
       type: new RegExp(type),
       brand: new RegExp(brand),
-      color: new RegExp(color),
+      color: new RegExp(color)
     };
     const result = await CarRepository.findCar(query, options);
     return result;
@@ -22,7 +22,7 @@ class CarService {
   async findCarById(payload) {
     const result = await CarRepository.findCarById(payload);
     if (!result) {
-      throw new NotFound("id");
+      throw new NotFound('id');
     }
     return result;
   }
@@ -30,7 +30,7 @@ class CarService {
   async deleteCar(payload) {
     const result = await CarRepository.deleteCar(payload);
     if (result == null) {
-      throw new NotFound("id");
+      throw new NotFound('id');
     }
     return result;
   }
@@ -38,9 +38,9 @@ class CarService {
   async updateCar(id, body) {
     const result = await CarRepository.updateCar(id, body);
     if (result == null) {
-      throw new NotFound("id");
+      throw new NotFound('id');
     }
-    const res = await { message: "Car updated successfully" };
+    const res = await { message: 'Car updated successfully' };
     return res;
   }
 

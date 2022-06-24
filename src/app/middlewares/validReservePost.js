@@ -1,12 +1,12 @@
-const joi = require("joi");
+const joi = require('joi');
 
 const reservePost = joi.object({
   id_user: joi.string().required(),
-  data_start: joi.string().required(),
-  data_end: joi.string().required(),
+  data_start: joi.date().format('DD/MM/YYYY').required(),
+  data_end: joi.date().format('DD/MM/YYYY').required(),
   id_car: joi.string().required(),
   id_rental: joi.string().required(),
-  final_value: joi.number(),
+  final_value: joi.number()
 });
 
 module.exports = async (req, res, next) => {
@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
     return next();
   } catch (error) {
     return res.status(400).json({
-      error: error.message,
+      error: error.message
     });
   }
 };

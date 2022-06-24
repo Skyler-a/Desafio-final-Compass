@@ -1,6 +1,6 @@
-const PersonRepository = require("../repository/personRepository");
-const NotFound = require("../errors/notFound");
-const formataCpf = require("../utils/cpfFomate");
+const PersonRepository = require('../repository/personRepository');
+const NotFound = require('../errors/notFound');
+const formataCpf = require('../utils/cpfFomate');
 
 class PersonService {
   async createPerson(payload) {
@@ -15,7 +15,7 @@ class PersonService {
       cpf: new RegExp(cpf),
       birthDay: new RegExp(birthDay),
       email: new RegExp(email),
-      canDrive: new RegExp(canDrive),
+      canDrive: new RegExp(canDrive)
     };
     const result = await PersonRepository.findPerson(query, options);
     return result;
@@ -24,7 +24,7 @@ class PersonService {
   async findPersonById(payload) {
     const result = await PersonRepository.findPersonById(payload);
     if (result == null) {
-      throw new NotFound("id");
+      throw new NotFound('id');
     }
     formataCpf(result);
     return result;
@@ -33,7 +33,7 @@ class PersonService {
   async deletePerson(payload) {
     const result = await PersonRepository.deletePerson(payload);
     if (result == null) {
-      throw new NotFound("id");
+      throw new NotFound('id');
     }
     formataCpf(result);
     return result;
@@ -42,7 +42,7 @@ class PersonService {
   async updatePerson(id, body) {
     const result = await PersonRepository.updatePerson(id, body);
     if (result == null) {
-      throw new NotFound("id");
+      throw new NotFound('id');
     }
     return result;
   }

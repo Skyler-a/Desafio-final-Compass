@@ -1,5 +1,5 @@
-const joi = require("joi");
-const BadRequest = require("../errors/badRequest");
+const joi = require('joi');
+const BadRequest = require('../errors/badRequest');
 
 const carUpdate = joi.object({
   model: joi.string(),
@@ -13,11 +13,11 @@ const carUpdate = joi.object({
     .unique()
     .items(
       joi.object({
-        description: joi.string(),
+        description: joi.string()
       })
     )
     .error(new BadRequest()),
-  passengersQtd: joi.number().min(3).error(new BadRequest()),
+  passengersQtd: joi.number().min(3).error(new BadRequest())
 });
 
 module.exports = async (req, res, next) => {
@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
     return next();
   } catch (error) {
     return res.status(400).json({
-      error: error.message,
+      error: error.message
     });
   }
 };
