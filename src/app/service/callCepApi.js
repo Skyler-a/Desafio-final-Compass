@@ -6,7 +6,7 @@ async function getCep(payload) {
   const { address } = payload;
   const { data } = await axios(`https://viacep.com.br/ws/${address.cep}/json`);
   if (data.erro) {
-    throw new NotFound('CEP not found');
+    throw new NotFound('CEP');
   }
   informations.push({
     cep: data.cep,

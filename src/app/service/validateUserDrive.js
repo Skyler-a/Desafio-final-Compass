@@ -1,11 +1,12 @@
 const personRepository = require('../repository/personRepository');
+const BadRequest = require('../errors/badRequest');
 
 async function validateUserDrive(idPerson) {
   if (idPerson) {
     const result = await personRepository.findPersonById(idPerson);
     const { canDrive } = result;
     if (canDrive === 'no') {
-      console.log('ali2');
+      throw new BadRequest('You can not drive');
     }
   }
 }
