@@ -1,5 +1,6 @@
 const joi = require('joi');
 const validateCNPJ = require('../utils/validateCnpj');
+const enums = require('../utils/enums');
 
 const rentalUpdate = joi.object({
   name: joi.string(),
@@ -9,7 +10,7 @@ const rentalUpdate = joi.object({
     .object({
       cep: joi.string(),
       number: joi.string(),
-      isFilial: joi.string().valid('true', 'false')
+      isFilial: joi.string().valid(...enums.isFilial)
     })
     .min(1)
 });

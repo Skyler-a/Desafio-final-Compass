@@ -1,5 +1,6 @@
 const joi = require('joi');
 const validateCNPJ = require('../utils/validateCnpj');
+const enums = require('../utils/enums');
 
 const rentalPost = joi.object({
   name: joi.string().required(),
@@ -9,7 +10,10 @@ const rentalPost = joi.object({
     .object({
       cep: joi.string().required(),
       number: joi.string().required(),
-      isFilial: joi.string().valid('true', 'false').required()
+      isFilial: joi
+        .string()
+        .valid(...enums.isFilial)
+        .required()
     })
     .min(1)
     .required()

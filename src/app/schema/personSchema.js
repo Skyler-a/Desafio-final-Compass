@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const paginate = require('mongoose-paginate-v2');
 const bcript = require('bcryptjs');
+const enums = require('../utils/enums');
 
 const personSchema = new mongoose.Schema(
   {
@@ -30,7 +31,7 @@ const personSchema = new mongoose.Schema(
     canDrive: {
       type: String,
       enum: {
-        values: ['yes', 'no'],
+        values: [...enums.canDrive],
         required: true
       }
     }

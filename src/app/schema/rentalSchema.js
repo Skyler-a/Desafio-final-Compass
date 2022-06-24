@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const paginate = require('mongoose-paginate-v2');
+const enums = require('../utils/enums');
 
 const rentalSchema = new mongoose.Schema(
   {
@@ -30,7 +31,7 @@ const rentalSchema = new mongoose.Schema(
           type: String,
           required: true,
           enum: {
-            values: ['true', 'false'],
+            values: [...enums.isFilial],
             message: 'isFilial must be true or false'
           }
         },

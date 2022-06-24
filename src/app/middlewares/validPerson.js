@@ -1,6 +1,6 @@
 const joi = require('joi').extend(require('@joi/date'));
-
 const moment = require('moment');
+const enums = require('../utils/enums');
 const validateCpf = require('../utils/validateCpf');
 
 const personPost = joi.object({
@@ -9,7 +9,10 @@ const personPost = joi.object({
   birthDay: joi.date().format('DD/MM/YYYY').required(),
   email: joi.string().email().required(),
   password: joi.string().min(6).required(),
-  canDrive: joi.string().valid('yes', 'no').required()
+  canDrive: joi
+    .string()
+    .valid(...enums.canDrive)
+    .required()
 });
 
 module.exports = async (req, res, next) => {
