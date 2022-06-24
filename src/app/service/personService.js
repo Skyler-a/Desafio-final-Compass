@@ -1,9 +1,15 @@
 const PersonRepository = require('../repository/personRepository');
 const NotFound = require('../errors/notFound');
+const BadRequest = require('../errors/badRequest');
+const validateCpf = require('../utils/validateCpf');
+const validateBirthDay = require('../utils/validateBirthDay');
 const formataCpf = require('../utils/cpfFomate');
 
 class PersonService {
   async createPerson(payload) {
+    const cpfValidation = await validateCpf(payload.cpf);
+    if (cpfValidation === false) throw new BadRequest('Invalid Cpf');
+    await validateBirthDay(payload.birthDay);
     const result = await PersonRepository.createPerson(payload);
     return result;
   }
@@ -40,6 +46,9 @@ class PersonService {
   }
 
   async updatePerson(id, body) {
+    const cpfValidation = await validateCpf(body.cpf);
+    if (cpfValidation === false) throw new BadRequest('Invalid Cpf');
+    await validateBirthDay(body.birthDay);
     const result = await PersonRepository.updatePerson(id, body);
     if (result == null) {
       throw new NotFound('id');

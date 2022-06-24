@@ -1,5 +1,4 @@
 const joi = require('joi');
-const validateCNPJ = require('../utils/validateCnpj');
 const enums = require('../utils/enums');
 
 const rentalPost = joi.object({
@@ -22,12 +21,6 @@ const rentalPost = joi.object({
 module.exports = async (req, res, next) => {
   try {
     const reqBody = req.body;
-
-    if (!validateCNPJ(reqBody.cnpj)) {
-      return res.status(400).json({
-        message: 'Your cnpj is invalid'
-      });
-    }
 
     await rentalPost.validateAsync({ ...reqBody });
     return next();

@@ -1,7 +1,5 @@
 const joi = require('joi').extend(require('@joi/date'));
-const moment = require('moment');
 const enums = require('../utils/enums');
-const validateCpf = require('../utils/validateCpf');
 
 const personPost = joi.object({
   name: joi.string().min(4).required(),
@@ -18,20 +16,6 @@ const personPost = joi.object({
 module.exports = async (req, res, next) => {
   try {
     const reqBody = req.body;
-    const birthDay = moment(reqBody.birthDay, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    const birthDayIsInvalid = moment().diff(birthDay, 'years', false) < 18;
-
-    if (birthDayIsInvalid) {
-      return res.status(400).json({
-        message: 'Your age must be at least 18 years old'
-      });
-    }
-
-    if (!validateCpf(reqBody.cpf)) {
-      return res.status(400).json({
-        message: 'Your cpf is invalid'
-      });
-    }
 
     await personPost.validateAsync({ ...reqBody });
     return next();
