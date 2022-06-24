@@ -29,6 +29,7 @@ const carSchema = new mongoose.Schema(
     ],
     passengersQtd: {
       type: Number,
+      min: 3,
       required: true
     },
     color: {
