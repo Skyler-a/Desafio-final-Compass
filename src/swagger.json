@@ -1,0 +1,1524 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Renpass Uol",
+        "description": "Api tem como objetivo gerenciar locadoras de carros de luxo e de clientes",
+        "contact": {
+            "name": "Arthur",
+            "email": "arthur.barros.pb@compass.com.br"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [{
+        "url": "http://localhost:3000/",
+        "description": "Servidor de teste"
+    }],
+    "components": {
+        "schemas": {
+            "Car": {
+                "type": "object",
+                "properties": {
+                    "model": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "accessories": {
+                        "type": "object",
+                        "properties": {
+                            "description": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "passengersQnt": {
+                        "type": "number"
+                    }
+                }
+            },
+            "person": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string",
+                    "minLength": 11,
+                    "maxLength": 14
+                  },
+                  "birthDay": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "canDrive": {
+                    "type": "string",
+                    "enum": ["yes", "no"]
+                  }
+                }
+            },
+            "address": {
+                "type": "object",
+                "properties": {
+                  "cep": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "isFilial": {
+                    "type": "boolean"
+                  }
+                }
+            },
+            "rental": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                      },
+                      "cnpj": {
+                        "type": "string"
+                      },
+                      "activities": {
+                        "type": "string"
+                      },
+                      "address": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/address"
+                       }
+                    }
+                }
+            },
+            "fleet": {
+                "type": "object",
+                "properties": {
+                    "id_car": {
+                        "type": "string"
+                    },
+                    "id_rental": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["available", "unavailable", "rented"]
+                    },
+                    "daily_value": {
+                        "type": "number"
+                    },
+                    "plate": {
+                        "type": "string"
+                    }
+                }
+            },
+            "reserve": {
+                "type": "object",
+                "properties": {
+                    "id_user": {
+                        "type": "string"
+                    },
+                    "id_car": {
+                        "type": "string"
+                    },
+                    "id_rental": {
+                        "type": "string"
+                    },
+                    "data_start": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "data_end": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "final_value": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "paths": {
+        "/api/v1/authenticate": {
+            "post": {
+              "summary": "Autenticação de usuário",
+              "tags": ["Authenticate"],
+              "requestBody": {
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "password": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "successo"
+                },
+                "401": {
+                  "description": "Não autorizado"
+                },
+                "404": {
+                  "description": "Usuário não encontrado"
+                }
+              }
+            }
+        },
+        "/api/v1/car": {
+            "post": {
+                "summary": "Cadastra um novo carro",
+                "description": "Esta rota irá cadastrar um novo carro",
+                "tags": ["Car"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Car"
+                            },
+                            "examples": {
+                                "Car": {
+                                    "value": {
+                                        "model": "S10 2.8",
+                                        "type": "Sedan",
+                                        "brand": "GM",
+                                        "year": "2022",
+                                        "accessories": 
+                                          {
+                                            "description": "ar-condicionado"
+                                          } ,
+                                        "passengersQtd": 4
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Carro cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Car"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista todos os carros cadastrados",
+                "tags": ["Car"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                      "name": "model",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "type",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "brand",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "color",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "accessories",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/Car"
+                            },
+                            "example": {
+                              "vehicles": [
+                                {
+                                    "_id": "629d1f807b1651bf71da4dbf",
+                                    "model": "S10 2.8",
+                                    "type": "sedan",
+                                    "brand": "GM",
+                                    "color": "branco",
+                                    "year": 2021,
+                                    "accessories": [
+                                        {
+                                            "description": "Ar-condicionado",
+                                            "_id": "629d1f807b1651bg11da4dbf"
+                                        }
+                                    ],
+                                    "passengersQtd": 4
+                                }],
+            
+                                "total": 5,
+                                "offset": 1,
+                                "limit": 20
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    }
+                }
+            }
+        },
+        "/api/v1/car/{id}": {
+            "get": {
+                "summary": "Busca um carro pelo id",
+                "tags": ["Car"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/Car"
+                            },
+                            "example": {
+                                    "_id": "629d1f807b1651bf71da4dbf",
+                                    "model": "S10 2.8",
+                                    "type": "sedan",
+                                    "brand": "GM",
+                                    "color": "branco",
+                                    "year": 2021,
+                                    "accessories": [
+                                        {
+                                            "description": "Ar-condicionado",
+                                            "_id": "629d1f807b1651bg11da4dbf"
+                                        }
+                                    ],
+                                    "passengersQtd": 4 
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza um carro",
+                "tags": ["Car"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Car"
+                            },
+                            "example": {
+                                "color": "red"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successo"
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    },
+                    "404": {
+                        "description": "Carro não encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta um carro cadastrado",
+                "tags": ["Car"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successo"
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    },
+                    "404": {
+                        "description": "Carro não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/v1/car/{id}/accessories/{accessorieId}": {
+            "put": {
+                "summary": "Atualiza um acessório específico de um carro",
+                "tags": ["Car"],
+                "security": [
+                    {
+                      "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Id do carro",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "accessorieId",
+                        "description": "Id do acessório",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Car"
+                            },
+                            "example": {
+                                "description": "Direção hidráulica"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successo"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    }
+                }
+            }
+        },
+        "/api/v1/person": {
+            "post": {
+                "summary": "Cadastra um novo cliente",
+                "description": "Esta rota irá cadastrar um novo cliente",
+                "tags": ["Person"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/person"
+                            },
+                            "examples": {
+                                "Person": {
+                                    "value": {
+                                        "name": "Arthur",
+                                        "cpf": "46951572410",
+                                        "email": "arthur@gmail.com",
+                                        "birthDay": "20/07/2000",
+                                        "password": "123456",
+                                        "canDrive": "yes"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/person"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista todos os clientes cadastrados",
+                "tags": ["Person"],
+                "parameters": [
+                    {
+                      "name": "name",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "email",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "birthDay",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "canDrive",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "cpf",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/person"
+                            },
+                            "example": {
+                              "Person": [
+                                {
+                                    "_id": "629fe47c7c59fd0a9948db8c",
+                                    "name": "Arthur",
+                                    "cpf": "266.680.310-48",
+                                    "birthDay": "20/07/2000",
+                                    "email": "arthur@gmail.com",
+                                    "canDrive": "yes"
+                                }],
+            
+                                "total": 5,
+                                "offset": 1,
+                                "limit": 20
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            }
+        },
+        "/api/v1/person/{id}": {
+            "get": {
+                "summary": "Busca um cliente pelo id",
+                "tags": ["Person"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/person"
+                            },
+                            "example": {
+                                "_id": "629fe47c7c59fd0a9948db8c",
+                                "name": "Arthur",
+                                "cpf": "266.680.310-48",
+                                "birthDay": "20/07/2000",
+                                "email": "arthur@gmail.com",
+                                "canDrive": "yes"
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza um cliente",
+                "tags": ["Person"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/person"
+                            },
+                            "example": {
+                                "name": "Roberto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successo"
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta um cliente cadastrado",
+                "tags": ["Person"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successo"
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/v1/rental": {
+            "post": {
+                "summary": "Cadastra uma nova locadora",
+                "description": "Esta rota irá cadastrar uma nova locadora",
+                "tags": ["Rental"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/rental"
+                            },
+                            "examples": {
+                                "Person": {
+                                    "value": {
+                                        "name": "Gran Car Locadoras",
+                                        "cnpj": "62639504000103",
+                                        "activities": "Aluguel de Carros E Gestão de Frotas",
+                                        "address": {
+                                            "cep": "96200-500",
+                                            "number": "1234",
+                                            "isFilial": "true"
+                                        }
+                                    }
+                                }    
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Locadora cadastrada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/rental"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista todas as locadoras cadastradas",
+                "tags": ["Rental"],
+                "parameters": [
+                    {
+                      "name": "name",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "cnpj",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "activities",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "address",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "cep",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "number",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "isFilial",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/rental"
+                            },
+                            "example": {
+                              "Rental": [
+                                {
+                                    "_id": "62a92f23d55783af0f37ce6f",
+                                    "name": "Gran Car Locadoras",
+                                    "cnpj": "62639504000103",
+                                    "activities": "Aluguel de Carros E Gestão de Frotas",
+                                    "address": [
+                                      {
+                                        "cep": "96200-500",
+                                        "number": "1234",
+                                        "isFilial": "true",
+                                        "street": "Rua tal",
+                                        "neighborhood": "Bairro tal",
+                                        "city": "Belém",
+                                        "state": "PA",
+                                        "_id": "62a92f23d55783af0f37ce6f"
+                                      }
+                                    ]
+                                }],
+            
+                                "total": 5,
+                                "offset": 1,
+                                "limit": 20
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            }
+        },
+        "/api/v1/rental/{id}": {
+            "get": {
+                "summary": "Busca uma locadora por ID",
+                "tags": ["Rental"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/rental"
+                            },
+                            "example": {
+                                "_id": "62a92f23d55783af0f37ce6f",
+                                    "name": "Gran Car Locadoras",
+                                    "cnpj": "62639504000103",
+                                    "activities": "Aluguel de Carros E Gestão de Frotas",
+                                    "address": [
+                                      {
+                                        "cep": "96200-500",
+                                        "number": "1234",
+                                        "isFilial": "true",
+                                        "street": "Rua tal",
+                                        "neighborhood": "Bairro tal",
+                                        "city": "Belém",
+                                        "state": "PA",
+                                        "_id": "62a92f23d55783af0f37ce6f"
+                                      }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza uma locadora",
+                "tags": ["Rental"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/rental"
+                            },
+                            "example": {
+                                "name": "Yama Car Locadoras"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successo"
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta uma locadora cadastrada",
+                "tags": ["Rental"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successo"
+                    },
+                    "404": {
+                        "description": "Locadora não encontrada"
+                    }
+                }
+            }
+        },
+        "/api/v1/rental/{idRental}/fleet": {
+            "post": {
+                "summary": "Cadastra uma nova frota para uma locadora",
+                "description": "Esta rota irá cadastrar uma nova frota",
+                "tags": ["Fleet"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/fleet"
+                            },
+                            "examples": {
+                                "Fleet": {
+                                    "value": {
+                                        "id_car": "62b0cddd16dda2a8dddc8c2b",
+                                        "id_rental": "62a93069d55783af0f37ce79",
+                                        "status": "avaliable",
+                                        "daily_value": 100,
+                                        "plate": "AB211"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Frota cadastrada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/fleet"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista todos as frotas de uma locadora",
+                "tags": ["Fleet"],
+                "parameters": [
+                    {
+                      "name": "id_car",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "id_rental",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "status",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "daily_value",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "plate",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/fleet"
+                            },
+                            "example": {
+                              "Fleet": [
+                                {
+                                    "_id": "62b0fb66960928a6c4ffc3af",
+                                    "id_car": "62b0cddd16dda2a8dddc8c2b",
+                                    "id_rental": "62a93069d55783af0f37ce79",
+                                    "status": "avaliable",
+                                    "daily_value": 100,
+                                    "plate": "AB211"
+                                }],
+            
+                                "total": 5,
+                                "offset": 1,
+                                "limit": 20
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "Locadora não encontrada"
+                    }
+                }
+            }
+        },
+        "/api/v1/rental/{idRental}/fleet/{id}": {
+            "get": {
+                "summary": "Busca uma frota por ID",
+                "tags": ["Fleet"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/fleet"
+                            },
+                            "example": {
+                                "_id": "62b0fb66960928a6c4ffc3af",
+                                "id_car": "62b0cddd16dda2a8dddc8c2b",
+                                "id_rental": "62a93069d55783af0f37ce79",
+                                "status": "avaliable",
+                                "daily_value": 100,
+                                "plate": "AB211"
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "Locadora ou frota não encontrada"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza um frota",
+                "tags": ["Fleet"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/fleet"
+                            },
+                            "example": {
+                                "daily_value": "500"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successo"
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "NotFound"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta uma frota cadastrada",
+                "tags": ["Fleet"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successo"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/v1/rental/{idRental}/reserve": {
+            "post": {
+                "summary": "Cadastra uma nova reserva",
+                "description": "Esta rota irá cadastrar uma nova resserva",
+                "tags": ["Reserve"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/reserve"
+                            },
+                            "examples": {
+                                "Fleet": {
+                                    "value": {
+                                        "id_user": "62a9e9ce7f59dc67201cd288",
+                                        "data_start": "20/07/2022",
+                                        "data_end": "22/07/2022",
+                                        "id_car": "62b0cddd16dda2a8dddc8c2b",
+                                        "id_rental": "62a93069d55783af0f37ce79"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Reserva cadastrada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/reserve"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista todos as reservas",
+                "tags": ["Reserve"],
+                "parameters": [
+                    {
+                      "name": "id_user",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "data_start",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "data_end",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "id_car",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "name": "id_rental",
+                      "in": "query",
+                      "schema": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/reserve"
+                            },
+                            "example": {
+                              "Fleet": [
+                                {
+                                    "_id": "62b27db06aac910ac2079a33",
+                                    "id_user": "62a9e9ce7f59dc67201cd288",
+                                    "data_start": "20/07/2022",
+                                    "data_end": "22/07/2022",
+                                    "id_car": "62b0cddd16dda2a8dddc8c2b",
+                                    "id_rental": "62a93069d55783af0f37ce79",
+                                    "final_value": 1500
+                                }],
+            
+                                "total": 5,
+                                "offset": 1,
+                                "limit": 20
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/v1/rental/{idRental}/reserve/{id}": {
+            "get": {
+                "summary": "Busca uma reserva por ID",
+                "tags": ["Reserve"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "type": "object",
+                              "$ref": "#/components/schemas/reserve"
+                            },
+                            "example": {
+                                "_id": "62b27db06aac910ac2079a33",
+                                "id_user": "62a9e9ce7f59dc67201cd288",
+                                "data_start": "20/07/2022",
+                                "data_end": "22/07/2022",
+                                "id_car": "62b0cddd16dda2a8dddc8c2b",
+                                "id_rental": "62a93069d55783af0f37ce79",
+                                "final_value": 1500
+                            }
+                          }
+                        }
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Atualiza uma reserva",
+                "tags": ["Reserve"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/reserve"
+                            },
+                            "example": {
+                                "data_end": "30/07/2022"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successo"
+                    },
+                    "400": {
+                        "description": "BadRequest"
+                    },
+                    "404": {
+                        "description": "NotFound"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta uma reserva cadastrada",
+                "tags": ["Reserve"],
+                "parameters": [
+                    {
+                        "name": "idRental",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        } 
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                          "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successo"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    }
+}
+
