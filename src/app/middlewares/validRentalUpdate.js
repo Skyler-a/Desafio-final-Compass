@@ -1,18 +1,4 @@
-const joi = require('joi');
-const enums = require('../utils/enums');
-
-const rentalUpdate = joi.object({
-  name: joi.string(),
-  cnpj: joi.string(),
-  activities: joi.string(),
-  address: joi
-    .object({
-      cep: joi.string(),
-      number: joi.string(),
-      isFilial: joi.string().valid(...enums.isFilial)
-    })
-    .min(1)
-});
+const { rentalUpdate } = require('../validations/rentalJoi');
 
 module.exports = async (req, res, next) => {
   try {
