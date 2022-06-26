@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 const RentalService = require('../service/rentalService');
 const BadRequest = require('../errors/badRequest');
 
@@ -16,8 +15,8 @@ class RentalController {
     try {
       const { page, limit } = req.query;
       const options = {
-        page: parseInt(page),
-        limit: parseInt(limit)
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10)
       };
       const result = await RentalService.findRental(req.query, options);
       return res.status(200).json(result);

@@ -42,7 +42,7 @@ const personSchema = new mongoose.Schema(
   }
 );
 
-personSchema.pre('save', async function (next) {
+personSchema.pre('save', async function password(next) {
   const hash = await bcript.hash(this.password, 10);
   this.password = hash;
   next();

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const moment = require('moment');
 const BadRequest = require('../errors/badRequest');
 

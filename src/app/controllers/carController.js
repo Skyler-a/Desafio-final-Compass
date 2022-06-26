@@ -1,5 +1,3 @@
-/* eslint-disable radix */
-
 const CarService = require('../service/carService');
 const BadRequest = require('../errors/badRequest');
 
@@ -18,8 +16,8 @@ class CarController {
     try {
       const { page, limit } = req.query;
       const options = {
-        page: parseInt(page),
-        limit: parseInt(limit)
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10)
       };
       const result = await CarService.findCar(payload, options);
       return res.status(200).json(result);

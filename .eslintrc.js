@@ -11,7 +11,12 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto'
+      }
+    ],
     'class-methods-use-this': 'off',
     camelcase: 'off',
     'new-cap': 1,

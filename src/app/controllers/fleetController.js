@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 const FleetService = require('../service/fleetService');
 const BadRequest = require('../errors/badRequest');
 
@@ -20,8 +19,8 @@ class FleetController {
     try {
       const { page, limit } = req.query;
       const options = {
-        page: parseInt(page),
-        limit: parseInt(limit)
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10)
       };
       const result = await FleetService.getFleet(req.query, req.params.id, options);
       return res.status(200).json(result);

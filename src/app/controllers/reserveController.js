@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 const ReserveService = require('../service/reserveService');
 const BadRequest = require('../errors/badRequest');
 
@@ -19,8 +18,8 @@ class ReserveController {
     try {
       const { page, limit } = req.query;
       const options = {
-        page: parseInt(page),
-        limit: parseInt(limit)
+        page: parseInt(page, 10),
+        limit: parseInt(limit, 10)
       };
       const result = await ReserveService.getReserve(req.params.id, req.query, options);
       return res.status(200).json(result);
