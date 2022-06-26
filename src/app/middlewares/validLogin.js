@@ -1,4 +1,4 @@
-const { login } = require('../validations/loginJoi');
+const login = require('../validations/loginJoi');
 
 module.exports = async (req, res, next) => {
   try {
