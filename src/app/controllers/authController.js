@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-sequences */
 const AuthService = require('../service/authService');
 
 class AuthController {
@@ -7,7 +5,7 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const result = await AuthService.login(email, password);
-      return res.setHeader('token', result.token), res.status(200).json({ Message: 'Login Successfully' });
+      return res.setHeader('token', result.token).status(200).json({ Message: 'Login Successfully' });
     } catch (error) {
       return res.status(401).json(error);
     }

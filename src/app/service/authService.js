@@ -1,8 +1,8 @@
 const bcript = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const AuthRepository = require('../repository/authRepository');
-const authConfig = require('../config/auth.json');
 const formataCpf = require('../utils/cpfFomate');
+require('dotenv').config();
 
 class AuthService {
   async login(email, password) {
@@ -14,7 +14,7 @@ class AuthService {
       throw new Error('password incorrect');
     }
     result.password = undefined;
-    const token = jwt.sign({ id: result.id }, authConfig.secret, {
+    const token = jwt.sign({ id: result.id }, process.env.SECRET, {
       expiresIn: 86400
     });
     formataCpf(result);

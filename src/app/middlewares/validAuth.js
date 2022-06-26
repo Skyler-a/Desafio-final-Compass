@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const authConfig = require('../config/auth.json');
+require('dotenv').config();
 
 // eslint-disable-next-line consistent-return
 module.exports = async (req, res, next) => {
@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({ error: 'token malformated' });
   }
 
-  jwt.verify(token, authConfig.secret, (error, decoded) => {
+  jwt.verify(token, process.env.SECRET, (error, decoded) => {
     if (error) {
       return res.status(401).json({ error: 'Invalid token' });
     }

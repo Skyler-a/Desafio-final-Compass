@@ -1,11 +1,10 @@
 const joi = require('joi');
-const BadRequest = require('../errors/badRequest');
 
 const carUpdate = joi.object({
   model: joi.string(),
   type: joi.string(),
   brand: joi.string(),
-  year: joi.number().min(1950).max(2022).error(new BadRequest()),
+  year: joi.number().min(1950).max(2022),
   color: joi.string(),
   accessories: joi
     .array()
@@ -15,9 +14,8 @@ const carUpdate = joi.object({
       joi.object({
         description: joi.string()
       })
-    )
-    .error(new BadRequest()),
-  passengersQtd: joi.number().min(3).error(new BadRequest())
+    ),
+  passengersQtd: joi.number().min(3)
 });
 
 module.exports = async (req, res, next) => {

@@ -1,4 +1,3 @@
-/* eslint-disable no-multi-assign */
 function formataCpf(person) {
   if (Array.isArray(person)) {
     const personFormatado = person.map((teste) => {
@@ -8,7 +7,8 @@ function formataCpf(person) {
     });
   }
   const cpf = person.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
-  const personFormatado = (person.cpf = cpf);
+  person.cpf = cpf;
+  const personFormatado = person.cpf;
   return personFormatado;
 }
 module.exports = formataCpf;

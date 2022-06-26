@@ -41,7 +41,6 @@ class PersonService {
     if (result == null) {
       throw new NotFound('id');
     }
-    formataCpf(result);
     return result;
   }
 
