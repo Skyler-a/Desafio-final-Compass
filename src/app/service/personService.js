@@ -3,7 +3,6 @@ const NotFound = require('../errors/notFound');
 const BadRequest = require('../errors/badRequest');
 const validateCpf = require('../utils/validateCpf');
 const validateBirthDay = require('../utils/validateBirthDay');
-const formataCpf = require('../utils/cpfFomate');
 
 class PersonService {
   async createPerson(payload) {
@@ -32,7 +31,6 @@ class PersonService {
     if (result == null) {
       throw new NotFound('id');
     }
-    formataCpf(result);
     return result;
   }
 

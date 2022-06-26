@@ -1,7 +1,6 @@
 const bcript = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const AuthRepository = require('../repository/authRepository');
-const formataCpf = require('../utils/cpfFomate');
 require('dotenv').config();
 
 class AuthService {
@@ -17,7 +16,6 @@ class AuthService {
     const token = jwt.sign({ id: result.id }, process.env.SECRET, {
       expiresIn: 86400
     });
-    formataCpf(result);
     return { result, token };
   }
 }

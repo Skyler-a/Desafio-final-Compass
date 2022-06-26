@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 function validateCpf(cpf) {
   if (!cpf) return true;
-
+  cpf = cpf.replace(/[^\d]+/g, '');
   let soma = 0;
 
   if (cpf === '01234567890') return false;
