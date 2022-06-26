@@ -4,7 +4,7 @@ const { cep, cnpj } = require('../utils/regex');
 
 const rentalPost = joi.object({
   name: joi.string().required(),
-  cnpj: joi.string().regex(cnpj).message('Invalid cep format. Try: 00.000.000/0000-00').required(),
+  cnpj: joi.string().regex(cnpj).message('Invalid cnpj format. Try: 00.000.000/0000-00').required(),
   activities: joi.string().required(),
   address: joi
     .object({
@@ -21,7 +21,7 @@ const rentalPost = joi.object({
 
 const rentalUpdate = joi.object({
   name: joi.string(),
-  cnpj: joi.string().regex(cnpj).message('Invalid cep format'),
+  cnpj: joi.string().regex(cnpj).message('Invalid cnpj format. Try: 00.000.000/0000-00'),
   activities: joi.string(),
   address: joi
     .object({
@@ -34,7 +34,7 @@ const rentalUpdate = joi.object({
 
 const rentalGet = joi.object({
   name: joi.string(),
-  cnpj: joi.string().regex(cnpj).message('Invalid cep format'),
+  cnpj: joi.string().regex(cnpj).message('Invalid cnpj format. Try: 00.000.000/0000-00'),
   activities: joi.string()
 });
 
