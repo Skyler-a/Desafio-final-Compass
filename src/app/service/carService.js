@@ -16,7 +16,7 @@ class CarService {
       color: new RegExp(color)
     };
     if (passengersQtd) query.passengersQtd = passengersQtd;
-    if (year) query.passengersQtd = year;
+    if (year) query.year = year;
     const result = await CarRepository.findCar(query, options);
     return result;
   }
