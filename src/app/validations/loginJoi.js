@@ -1,4 +1,4 @@
-const joi = require('joi').extend(require('@joi/date'));
+const joi = require('joi');
 
 const login = joi.object({
   email: joi.string().email().required(),
