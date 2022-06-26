@@ -1,17 +1,8 @@
-const joi = require('joi').extend(require('@joi/date'));
-
-const reservePost = joi.object({
-  id_user: joi.string(),
-  data_start: joi.date().format('DD/MM/YYYY'),
-  data_end: joi.date().format('DD/MM/YYYY'),
-  id_car: joi.string(),
-  id_rental: joi.string(),
-  final_value: joi.number()
-});
+const { reservePut } = require('../validations/reserveJoi');
 
 module.exports = async (req, res, next) => {
   try {
-    const { error } = await reservePost.validateAsync(req.body, { abortEarly: false });
+    const { error } = await reservePut.validateAsync(req.body, { abortEarly: false });
     if (error) throw new Error();
     return next();
   } catch (error) {
