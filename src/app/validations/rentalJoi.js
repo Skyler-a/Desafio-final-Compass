@@ -32,4 +32,10 @@ const rentalUpdate = joi.object({
     .min(1)
 });
 
-module.exports = { rentalPost, rentalUpdate };
+const rentalGet = joi.object({
+  name: joi.string(),
+  cnpj: joi.string().regex(cnpj).message('Invalid cep format'),
+  activities: joi.string()
+});
+
+module.exports = { rentalPost, rentalUpdate, rentalGet };

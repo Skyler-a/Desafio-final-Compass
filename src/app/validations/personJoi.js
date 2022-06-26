@@ -23,4 +23,12 @@ const personPut = joi.object({
   canDrive: joi.string().valid(...enums.canDrive)
 });
 
-module.exports = { personPost, personPut };
+const personGet = joi.object({
+  name: joi.string(),
+  cpf: joi.string(),
+  birthDay: joi.date().format('DD/MM/YYYY'),
+  email: joi.string().email(),
+  canDrive: joi.string().valid(...enums.canDrive)
+});
+
+module.exports = { personPost, personPut, personGet };

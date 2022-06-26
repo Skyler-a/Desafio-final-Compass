@@ -37,4 +37,13 @@ const carUpdate = joi.object({
   passengersQtd: joi.number().min(3)
 });
 
-module.exports = { carPost, carUpdate };
+const carGet = joi.object({
+  model: joi.string(),
+  type: joi.string(),
+  brand: joi.string(),
+  year: joi.string(),
+  color: joi.string(),
+  passengersQtd: joi.string()
+});
+
+module.exports = { carPost, carUpdate, carGet };
