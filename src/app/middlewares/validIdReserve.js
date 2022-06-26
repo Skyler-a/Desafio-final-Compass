@@ -1,8 +1,8 @@
-const { validId } = require('../validations/idJoi');
+const { validIdReserve } = require('../validations/idJoi');
 
 module.exports = async (req, res, next) => {
   try {
-    const { error } = await validId.validateAsync(req.params, { abortEarly: false });
+    const { error } = await validIdReserve.validateAsync(req.params, { abortEarly: false });
     if (error) throw new Error();
     return next();
   } catch (error) {
