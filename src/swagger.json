@@ -12,7 +12,12 @@
     "servers": [{
         "url": "http://localhost:3000/",
         "description": "Servidor de teste"
-    }],
+    }, 
+    {
+        "url": "https://renpass-arthur.herokuapp.com/",
+        "description": "Servidor do heroku"
+    }
+    ],
     "components": {
         "schemas": {
             "Car": {
