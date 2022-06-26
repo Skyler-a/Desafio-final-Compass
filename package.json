@@ -24,6 +24,7 @@
     "eslint-config-plugin": "^1.0.11",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
+    "jest": "^28.1.1",
     "nodemon": "^2.0.16",
     "prettier": "^2.7.1"
   },
@@ -33,7 +34,6 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "jest": "^28.1.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.3",
