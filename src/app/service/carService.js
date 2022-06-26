@@ -8,13 +8,15 @@ class CarService {
   }
 
   async findCar(payload, options) {
-    const { model, type, brand, color } = payload;
+    const { model, type, brand, color, passengersQtd, year } = payload;
     const query = {
       model: new RegExp(model),
       type: new RegExp(type),
       brand: new RegExp(brand),
       color: new RegExp(color)
     };
+    if (passengersQtd) query.passengersQtd = passengersQtd;
+    if (year) query.passengersQtd = year;
     const result = await CarRepository.findCar(query, options);
     return result;
   }

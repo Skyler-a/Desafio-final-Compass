@@ -41,9 +41,9 @@ const carGet = joi.object({
   model: joi.string(),
   type: joi.string(),
   brand: joi.string(),
-  year: joi.string(),
+  year: joi.number(),
   color: joi.string(),
-  passengersQtd: joi.string()
+  passengersQtd: joi.number()
 });
 
 module.exports = { carPost, carUpdate, carGet };
