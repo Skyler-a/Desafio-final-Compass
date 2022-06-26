@@ -1,14 +1,4 @@
-const joi = require('joi').extend(require('@joi/date'));
-const enums = require('../utils/enums');
-
-const personPut = joi.object({
-  name: joi.string().min(4),
-  cpf: joi.string(),
-  birthDay: joi.date().format('DD/MM/YYYY'),
-  email: joi.string().email(),
-  password: joi.string().min(6),
-  canDrive: joi.string().valid(...enums.canDrive)
-});
+const { personPut } = require('../validations/personJoi');
 
 module.exports = async (req, res, next) => {
   try {
